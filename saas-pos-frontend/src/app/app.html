@@ -1,6 +1,8 @@
 <nav>
   <ul>
     <li><a routerLink="/">Home (Customer POS)</a></li>
+    <li><a routerLink="/products">Products</a></li>
+    <li><a routerLink="/cart">Cart</a></li>
     <li><a routerLink="/admin">Admin Panel</a></li>
     <ng-container *ngIf="!(authService.currentUser$ | async)">
       <li><a routerLink="/login">Login</a></li>

@@ -1,0 +1,23 @@
+<div class="checkout-form-container">
+  <h2>Checkout</h2>
+  <div class="order-summary">
+    <h3>Order Summary</h3>
+    <ul *ngIf="cartItems$ | async as items">
+      <li *ngFor="let item of items">
+        {{ item.name }} - {{ item.quantity }} x {{ item.price | currency:'USD' }}
+      </li>
+    </ul>
+    <h4>Total: {{ cartTotal$ | async | currency:'USD' }}</h4>
+  </div>
+
+  <div class="customer-form">
+    <h3>Your Details (Mock)</h3>
+    <label for="customerName">Name:</label>
+    <input type="text" id="customerName" [(ngModel)]="customerName" placeholder="Enter your name" disabled>
+    <!-- ngModel would require FormsModule, disabling for simplicity as it's mock -->
+    <p><small><em>FormsModule not imported for this mock form. Input is disabled.</em></small></p>
+  </div>
+
+  <button (click)="submitOrder()" class="place-order-btn">Place Order</button>
+  <p><a routerLink="/cart">Back to Cart</a></p>
+</div>

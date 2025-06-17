@@ -1,0 +1,11 @@
+<div class="order-confirmation-container">
+  <ng-container *ngIf="orderId$ | async as orderId; else genericConfirmation">
+    <h2>Thank You for Your Order!</h2>
+    <p>Your Order #{{ orderId }} has been confirmed (mock).</p>
+  </ng-container>
+  <ng-template #genericConfirmation>
+    <h2>Thank You for Your Order!</h2>
+    <p>Your order has been confirmed (mock).</p>
+  </ng-template>
+  <p><a routerLink="/products">Continue Shopping</a></p>
+</div>
