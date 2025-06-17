@@ -7,9 +7,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\CustomerSetting;
+use App\Models\Subscription;
 
 class User extends Authenticatable
 {
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
+    }
+
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -44,6 +50,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role', // 'admin' or 'customer'
+        'stripe_customer_id',
     ];
 
     /**

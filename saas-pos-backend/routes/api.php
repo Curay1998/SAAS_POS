@@ -5,16 +5,25 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\CustomerController; // Assume CustomerController will be created
 use App\Http\Controllers\Customer\CustomerSettingsController;
+use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\WebhookController;
+
 
 // Authentication routes (from previous step)
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::post('/stripe/webhook', [WebhookController::class, 'handleWebhook']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::post('/subscribe', [SubscriptionController::class, 'createSubscription']);
+    Route::post('/subscription/cancel', [SubscriptionController::class, 'cancelSubscription']);
+    Route::get('/subscription', [SubscriptionController::class, 'getSubscription']);
 
     // Admin-specific routes for customer management
     // A real app would have role middleware here: ->middleware('role:admin')
