@@ -1,0 +1,30 @@
+<div>
+  <h2>Customer Settings</h2>
+  <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="currency">Currency:</label>
+      <select id="currency" formControlName="currency">
+        <option *ngFor="let currency of currencies" [value]="currency.code">
+          {{ currency.name }} ({{ currency.code }})
+        </option>
+      </select>
+      <div *ngIf="settingsForm.get('currency')?.invalid && (settingsForm.get('currency')?.dirty || settingsForm.get('currency')?.touched)">
+        Currency is required.
+      </div>
+    </div>
+
+    <div>
+      <label for="preferred_language">Preferred Language:</label>
+      <select id="preferred_language" formControlName="preferred_language">
+        <option *ngFor="let lang of languages" [value]="lang.code">
+          {{ lang.name }}
+        </option>
+      </select>
+      <div *ngIf="settingsForm.get('preferred_language')?.invalid && (settingsForm.get('preferred_language')?.dirty || settingsForm.get('preferred_language')?.touched)">
+        Preferred language is required.
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="settingsForm.invalid">Save Settings</button>
+  </form>
+</div>
