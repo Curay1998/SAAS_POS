@@ -13,13 +13,8 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        // Placeholder logic:
-        // $customers = User::where('role', 'customer')->get();
-        // return response()->json($customers);
-        $customers = [
-            ['id' => 1, 'name' => 'Test Customer 1', 'email' => 'customer1@example.com', 'role' => 'customer', 'created_at' => now()->toDateTimeString()],
-            ['id' => 2, 'name' => 'Test Customer 2', 'email' => 'customer2@example.com', 'role' => 'customer', 'created_at' => now()->toDateTimeString()],
-        ];
+        // Fetch actual customers from the database
+        $customers = User::where('role', 'customer')->get();
         return response()->json($customers);
     }
 
