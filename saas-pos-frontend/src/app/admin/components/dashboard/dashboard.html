@@ -1,6 +1,10 @@
 <div class="admin-dashboard">
   <h2>Admin Dashboard - Customer Management</h2>
 
+  <div style="margin-bottom: 1rem;">
+    <a routerLink="/admin/customers" class="btn btn-primary">View Customers Page</a>
+  </div>
+
   <div *ngIf="isLoading" class="loading">Loading...</div>
   <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
