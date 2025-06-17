@@ -1,0 +1,49 @@
+<div class="pos-container">
+  <!-- Product Selection Area -->
+  <div class="product-area">
+    <h2>Products</h2>
+    <div class="category-filter">
+      <button (click)="selectCategory(null)" [class.active]="selectedCategoryId === null">All Products</button>
+      <button *ngFor="let category of categories"
+              (click)="selectCategory(category.id)"
+              [class.active]="selectedCategoryId === category.id">
+        {{ category.name }}
+      </button>
+    </div>
+
+    <div class="product-grid" *ngIf="filteredProducts.length > 0; else noProducts">
+      <div class="product-card" *ngFor="let product of filteredProducts" (click)="addToCart(product)">
+        <img [src]="product.imageUrl || 'https://via.placeholder.com/100?text=No+Image'" [alt]="product.name">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.price | currency }}</p>
+      </div>
+    </div>
+    <ng-template #noProducts>
+      <p>No products found in this category or system is loading.</p>
+    </ng-template>
+  </div>
+
+  <!-- Cart / Order Summary Area -->
+  <div class="cart-area">
+    <h2>Current Order</h2>
+    <div *ngIf="cart.length > 0; else emptyCart">
+      <div class="cart-item" *ngFor="let item of cart">
+        <span class="item-name">{{ item.productName }}</span>
+        <div class="item-controls">
+          <input type="number" [value]="item.quantity" min="1" (change)="updateQuantity(item.productId, +$event.target.value)" class="item-quantity">
+          <span>x {{ item.price | currency }}</span>
+        </div>
+        <span class="item-total">{{ item.total | currency }}</span>
+        <button (click)="removeFromCart(item.productId)" class="remove-item">X</button>
+      </div>
+      <hr>
+      <div class="cart-total">
+        <strong>Total: {{ cartTotal | currency }}</strong>
+      </div>
+      <button class="checkout-button" (click)="checkout()">Proceed to Checkout</button>
+    </div>
+    <ng-template #emptyCart>
+      <p>Your cart is empty. Click on products to add them.</p>
+    </ng-template>
+  </div>
+</div>

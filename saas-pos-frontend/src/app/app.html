@@ -1,0 +1,14 @@
+<nav>
+  <ul>
+    <li><a routerLink="/">Home (Customer POS)</a></li>
+    <li><a routerLink="/admin">Admin Panel</a></li>
+    <ng-container *ngIf="!(authService.currentUser$ | async)">
+      <li><a routerLink="/login">Login</a></li>
+      <li><a routerLink="/register">Register</a></li>
+    </ng-container>
+    <li *ngIf="(authService.currentUser$ | async)">
+      <button (click)="logout()">Logout ({{ (authService.currentUser$ | async)?.name }})</button>
+    </li>
+  </ul>
+</nav>
+<router-outlet></router-outlet>

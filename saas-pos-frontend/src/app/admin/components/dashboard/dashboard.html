@@ -1,0 +1,66 @@
+<div class="admin-dashboard">
+  <h2>Admin Dashboard - Customer Management</h2>
+
+  <div *ngIf="isLoading" class="loading">Loading...</div>
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+  <!-- Customer Form -->
+  <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+    <h3>{{ editingCustomer ? 'Edit Customer' : 'Add New Customer' }}</h3>
+    <div>
+      <label for="name">Name:</label>
+      <input id="name" formControlName="name">
+      <div *ngIf="customerForm.get('name')?.invalid && customerForm.get('name')?.touched" class="error">
+        Name is required.
+      </div>
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input id="email" type="email" formControlName="email">
+      <div *ngIf="customerForm.get('email')?.invalid && customerForm.get('email')?.touched" class="error">
+        Valid email is required.
+      </div>
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input id="password" type="password" formControlName="password" [placeholder]="editingCustomer ? 'Leave blank to keep current' : 'Min 8 characters'">
+       <div *ngIf="customerForm.get('password')?.touched && ((!editingCustomer && !customerForm.get('password')?.value) || (customerForm.get('password')?.value && customerForm.get('password')?.value.length < 8))" class="error">
+        Password must be at least 8 characters. Required for new users.
+      </div>
+    </div>
+    <button type="submit" [disabled]="customerForm.invalid || isLoading">
+      {{ editingCustomer ? 'Update Customer' : 'Create Customer' }}
+    </button>
+    <button type="button" *ngIf="editingCustomer" (click)="onCancelEdit()" [disabled]="isLoading">Cancel Edit</button>
+  </form>
+
+  <hr>
+
+  <!-- Customer List -->
+  <h3>Customer List</h3>
+  <button (click)="loadCustomers()" [disabled]="isLoading">Refresh List</button>
+  <table *ngIf="!isLoading && customers.length > 0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Created At</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let customer of customers">
+        <td>{{ customer.id }}</td>
+        <td>{{ customer.name }}</td>
+        <td>{{ customer.email }}</td>
+        <td>{{ customer.created_at | date:'short' }}</td>
+        <td>
+          <button (click)="onEdit(customer)" [disabled]="isLoading">Edit</button>
+          <button (click)="onDelete(customer.id)" [disabled]="isLoading">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p *ngIf="!isLoading && customers.length === 0">No customers found.</p>
+</div>

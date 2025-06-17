@@ -1,0 +1,10 @@
+.admin-dashboard { padding: 20px; }
+.error, .error-message { color: red; margin-bottom: 10px; }
+.loading { font-style: italic; }
+form div { margin-bottom: 10px; }
+label { display: inline-block; width: 100px; }
+input { width: 250px; padding: 5px; }
+table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+button { margin-right: 5px; padding: 5px 10px; }
+hr { margin: 20px 0; }
