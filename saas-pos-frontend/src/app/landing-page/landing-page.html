@@ -1,8 +1,9 @@
 <div class="landing-page-container">
   <!-- Hero Section -->
   <section class="hero-section">
-    <h1>Welcome to Our SaaS Solution!</h1>
-    <p>The best platform to manage your business efficiently.</p>
+    <img *ngIf="appLogoUrl" [src]="appLogoUrl" alt="{{ appName }} Logo" style="max-height: 50px; margin-bottom: 10px;">
+    <h1>{{ landingPageTitle }}</h1>
+    <p>{{ landingPageSubtitle }}</p>
     <button>Get Started</button>
   </section>
 
@@ -72,4 +73,9 @@
       <button type="submit">Send Message</button>
     </form>
   </section>
+
+  <!-- Footer for Copyright -->
+  <footer>
+    <p>{{ copyrightText }}</p>
+  </footer>
 </div>

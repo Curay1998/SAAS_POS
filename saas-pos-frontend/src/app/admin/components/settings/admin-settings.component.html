@@ -1,0 +1,57 @@
+<div class="admin-settings-container">
+    <h2>Application Settings</h2>
+
+    <div *ngIf="isLoading" class="loading-indicator">Loading settings...</div>
+
+    <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+    </div>
+
+    <div *ngIf="successMessage" class="success-message">
+        {{ successMessage }}
+    </div>
+
+    <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()" *ngIf="!isLoading">
+        <div class="form-field">
+            <label for="app_name">Application Name:</label>
+            <input id="app_name" type="text" formControlName="app_name">
+            <div *ngIf="settingsForm.get('app_name')?.invalid && settingsForm.get('app_name')?.touched" class="validation-error">
+                Application name is required.
+            </div>
+        </div>
+
+        <div class="form-field">
+            <label for="copyright_text">Copyright Text:</label>
+            <input id="copyright_text" type="text" formControlName="copyright_text">
+             <div *ngIf="settingsForm.get('copyright_text')?.invalid && settingsForm.get('copyright_text')?.touched" class="validation-error">
+                Copyright text is required.
+            </div>
+        </div>
+
+        <div class="form-field">
+            <label for="app_logo_url">Application Logo URL:</label>
+            <input id="app_logo_url" type="text" formControlName="app_logo_url">
+            <!-- Add validation if logo URL becomes required, currently seeded as optional -->
+        </div>
+
+        <div class="form-field">
+            <label for="landing_page_title">Landing Page Title:</label>
+            <input id="landing_page_title" type="text" formControlName="landing_page_title">
+            <div *ngIf="settingsForm.get('landing_page_title')?.invalid && settingsForm.get('landing_page_title')?.touched" class="validation-error">
+                Landing page title is required.
+            </div>
+        </div>
+
+        <div class="form-field">
+            <label for="landing_page_subtitle">Landing Page Subtitle:</label>
+            <input id="landing_page_subtitle" type="text" formControlName="landing_page_subtitle">
+             <div *ngIf="settingsForm.get('landing_page_subtitle')?.invalid && settingsForm.get('landing_page_subtitle')?.touched" class="validation-error">
+                Landing page subtitle is required.
+            </div>
+        </div>
+
+        <button type="submit" [disabled]="settingsForm.invalid || isLoading">
+            {{ isLoading ? 'Saving...' : 'Save Settings' }}
+        </button>
+    </form>
+</div>

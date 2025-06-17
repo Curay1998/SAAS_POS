@@ -1,0 +1,68 @@
+.admin-settings-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.form-field {
+    margin-bottom: 15px;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-field input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.validation-error {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 3px;
+}
+
+.loading-indicator, .error-message, .success-message {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+
+.loading-indicator {
+    background-color: #eef;
+    border: 1px solid #aac;
+}
+
+.error-message {
+    background-color: #fdd;
+    color: #900;
+    border: 1px solid #fbb;
+}
+
+.success-message {
+    background-color: #dfd;
+    color: #070;
+    border: 1px solid #bfb;
+}
+
+button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button[type="submit"]:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
