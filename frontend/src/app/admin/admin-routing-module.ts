@@ -3,7 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent }
+  { path: '', component: DashboardComponent },
+  {
+    path: 'products',
+    loadChildren: () => import('./components/product/product.module').then(m => m.ProductModule)
+  }
 ];
 
 @NgModule({

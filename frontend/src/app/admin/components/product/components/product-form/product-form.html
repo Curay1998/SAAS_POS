@@ -1,0 +1,60 @@
+<div style="margin: 20px; max-width: 600px;">
+  <h2>{{ isEditMode ? 'Edit Product' : 'Create New Product' }}</h2>
+
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <!-- Name Field -->
+    <div style="margin-bottom: 15px;">
+      <label for="name" style="display: block; margin-bottom: 5px;">Name:</label>
+      <input type="text" id="name" formControlName="name" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+      <div *ngIf="f['name'].touched && f['name'].invalid" style="color: red; font-size: 0.9em; margin-top: 3px;">
+        <div *ngIf="f['name'].errors?.['required']">Name is required.</div>
+      </div>
+    </div>
+
+    <!-- Description Field -->
+    <div style="margin-bottom: 15px;">
+      <label for="description" style="display: block; margin-bottom: 5px;">Description:</label>
+      <textarea id="description" formControlName="description" rows="4" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"></textarea>
+    </div>
+
+    <!-- SKU Field -->
+    <div style="margin-bottom: 15px;">
+      <label for="sku" style="display: block; margin-bottom: 5px;">SKU:</label>
+      <input type="text" id="sku" formControlName="sku" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+      <div *ngIf="f['sku'].touched && f['sku'].invalid" style="color: red; font-size: 0.9em; margin-top: 3px;">
+        <!-- <div *ngIf="f['sku'].errors?.['required']">SKU is required.</div> -->
+        <div *ngIf="f['sku'].errors?.['pattern']">SKU must be alphanumeric with dashes.</div>
+      </div>
+    </div>
+
+    <!-- Quantity Field -->
+    <div style="margin-bottom: 15px;">
+      <label for="quantity" style="display: block; margin-bottom: 5px;">Quantity:</label>
+      <input type="number" id="quantity" formControlName="quantity" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+      <div *ngIf="f['quantity'].touched && f['quantity'].invalid" style="color: red; font-size: 0.9em; margin-top: 3px;">
+        <div *ngIf="f['quantity'].errors?.['required']">Quantity is required.</div>
+        <div *ngIf="f['quantity'].errors?.['min']">Quantity cannot be negative.</div>
+      </div>
+    </div>
+
+    <!-- Price Field -->
+    <div style="margin-bottom: 15px;">
+      <label for="price" style="display: block; margin-bottom: 5px;">Price:</label>
+      <input type="number" id="price" formControlName="price" step="0.01" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+      <div *ngIf="f['price'].touched && f['price'].invalid" style="color: red; font-size: 0.9em; margin-top: 3px;">
+        <div *ngIf="f['price'].errors?.['required']">Price is required.</div>
+        <div *ngIf="f['price'].errors?.['min']">Price cannot be negative.</div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div style="margin-top: 20px;">
+      <button type="submit" [disabled]="productForm.invalid" style="padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; margin-right: 10px;">
+        {{ isEditMode ? 'Update Product' : 'Create Product' }}
+      </button>
+      <button type="button" (click)="cancel()" style="padding: 10px 15px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,43 @@
+<div style="margin: 20px;">
+  <h2>Product List</h2>
+
+  <button (click)="addProduct()" style="margin-bottom: 20px;">Add New Product</button>
+
+  <table style="width: 100%; border-collapse: collapse;">
+    <thead>
+      <tr style="background-color: #f2f2f2;">
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">ID</th>
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Name</th>
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">SKU</th>
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Quantity</th>
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Price</th>
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td style="border: 1px solid #ddd; padding: 8px;">{{ product.id }}</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">{{ product.name }}</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">{{ product.sku }}</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">{{ product.quantity }}</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">{{ product.price | currency }}</td>
+        <td style="border: 1px solid #ddd; padding: 8px;">
+          <button (click)="editProduct(product.id!)" style="margin-right: 5px;">Edit</button>
+          <button (click)="deleteProduct(product.id!)">Delete</button>
+        </td>
+      </tr>
+      <tr *ngIf="products.length === 0">
+        <td colspan="6" style="border: 1px solid #ddd; padding: 8px; text-align: center;">No products found.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Basic Pagination (Optional, can be replaced with a library like ngx-pagination or Material Paginator) -->
+  <div *ngIf="paginatedResponse && paginatedResponse.total > paginatedResponse.per_page" style="margin-top: 20px; text-align: center;">
+    <button (click)="prevPage()" [disabled]="!paginatedResponse.prev_page_url">Previous</button>
+    <span style="margin: 0 10px;">
+      Page {{ paginatedResponse.current_page }} of {{ paginatedResponse.last_page }}
+    </span>
+    <button (click)="nextPage()" [disabled]="!paginatedResponse.next_page_url">Next</button>
+  </div>
+</div>

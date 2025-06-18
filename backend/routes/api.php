@@ -45,4 +45,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Customer settings routes
     Route::get('/customer/settings', [CustomerSettingsController::class, 'show'])->name('customer.settings.show');
     Route::put('/customer/settings', [CustomerSettingsController::class, 'update'])->name('customer.settings.update');
+
+    // Product routes
+    Route::apiResource('products', \App\Http\Controllers\Api\ProductController::class);
 });
