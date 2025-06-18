@@ -6,8 +6,8 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  templateUrl: './login.html',
+  styleUrls: ['./login.css'],
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterModule]
 })
@@ -31,10 +31,14 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe({
         next: (response) => {
-          // Based on backend response, redirect.
-          // e.g., if (response.user && response.user.role === 'admin') this.router.navigate(['/admin']);
-          // else this.router.navigate(['/customer']);
-          this.router.navigate(['/']); // Default redirect, adjust as needed
+          // Redirect based on user role
+          if (response.user && response.user.role === 'admin') {
+            this.router.navigate(['/admin']);
+          } else if (response.user && response.user.role === 'customer') {
+            this.router.navigate(['/customer']);
+          } else {
+            this.router.navigate(['/']);
+          }
         },
         error: (err) => {
           this.errorMessage = err.error?.message || 'Login failed. Please try again.';

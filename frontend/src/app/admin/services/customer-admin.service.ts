@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { AuthService, User } from '../../auth/auth.service'; // Re-use User interface
 
-// Potentially extend User interface if admin view needs more/different fields
-export interface AdminCustomerView extends User {
-    created_at?: string;
-    // other admin specific fields
+export interface AdminCustomerView {
+  id?: number;
+  name: string;
+  email: string;
+  role?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 @Injectable({
@@ -16,12 +18,13 @@ export interface AdminCustomerView extends User {
 export class CustomerAdminService {
   private apiUrl = `${environment.apiUrl}/admin/customers`;
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient) {}
 
   private getAuthHeaders(): HttpHeaders {
-    const token = this.authService.currentTokenValue;
+    const token = localStorage.getItem('token');
     return new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
     });
   }
 
@@ -33,12 +36,11 @@ export class CustomerAdminService {
     return this.http.get<AdminCustomerView>(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
   }
 
-  createCustomer(customerData: Partial<AdminCustomerView>): Observable<AdminCustomerView> {
-    // Ensure password (if included) is handled appropriately by backend stub
+  createCustomer(customerData: any): Observable<AdminCustomerView> {
     return this.http.post<AdminCustomerView>(this.apiUrl, customerData, { headers: this.getAuthHeaders() });
   }
 
-  updateCustomer(id: number, customerData: Partial<AdminCustomerView>): Observable<AdminCustomerView> {
+  updateCustomer(id: number, customerData: any): Observable<AdminCustomerView> {
     return this.http.put<AdminCustomerView>(`${this.apiUrl}/${id}`, customerData, { headers: this.getAuthHeaders() });
   }
 

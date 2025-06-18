@@ -6,8 +6,8 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
+  templateUrl: './register.html',
+  styleUrls: ['./register.css'],
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterModule]
 })
@@ -41,8 +41,17 @@ export class RegisterComponent {
       const { password_confirmation, ...userData } = this.registerForm.value;
       this.authService.register(userData).subscribe({
         next: (response) => {
-          // Assuming registration logs the user in or navigates them to login
-          this.router.navigate(['/login']); // Or to a dashboard if auto-login
+          // Registration successful, user is automatically logged in
+          if (response.user) {
+            // Redirect based on user role
+            if (response.user.role === 'admin') {
+              this.router.navigate(['/admin']);
+            } else {
+              this.router.navigate(['/customer']);
+            }
+          } else {
+            this.router.navigate(['/login']);
+          }
         },
         error: (err) => {
           this.errorMessage = err.error?.message || 'Registration failed. Please try again.';

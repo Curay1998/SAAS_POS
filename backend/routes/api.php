@@ -9,6 +9,11 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\WebhookController;
 
 
+// Test route
+Route::get('/test', function () {
+    return response()->json(['message' => 'API is working']);
+});
+
 // Authentication routes (from previous step)
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);

@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
-import { LandingPageComponent } from './landing-page/landing-page.component'; // Ensure this import is added
+import { LoginComponent } from './auth/login/login';
+import { RegisterComponent } from './auth/register/register';
+import { LandingPage } from './landing-page/landing-page'; // Ensure this import is added
 
 export const routes: Routes = [
-  { path: '', component: LandingPageComponent }, // New default route
+  { path: '', component: LandingPage }, // New default route
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   {

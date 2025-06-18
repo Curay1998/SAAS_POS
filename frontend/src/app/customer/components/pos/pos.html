@@ -33,7 +33,7 @@
       <div class="cart-item" *ngFor="let item of cart">
         <span class="item-name">{{ item.productName }}</span>
         <div class="item-controls">
-          <input type="number" [value]="item.quantity" min="1" (change)="updateQuantity(item.productId, +$event.target.value)" class="item-quantity">
+          <input type="number" [value]="item.quantity" min="1" (input)="updateQuantity(item.productId, +($any($event.target).value))" class="item-quantity">
           <span>x {{ item.price | currency }}</span>
         </div>
         <span class="item-total">{{ item.total | currency }}</span>
