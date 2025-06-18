@@ -1,1 +1,68 @@
-/* Add your styles here */
+.customer-list-container {
+  padding: 20px;
+}
+
+mat-toolbar {
+  margin: -20px -20px 20px -20px; /* Adjust to span full width */
+  width: calc(100% + 40px);
+}
+
+.loading-shade {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.8); /* Optional: for a slight overlay effect */
+}
+
+.loading-shade mat-spinner {
+  margin-bottom: 15px;
+}
+
+.error-message-bar {
+  display: flex;
+  align-items: center;
+  background-color: #f8d7da; /* Light red background */
+  color: #721c24; /* Dark red text */
+  padding: 10px 15px;
+  border: 1px solid #f5c6cb; /* Red border */
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+.error-message-bar mat-icon {
+  margin-right: 8px;
+}
+
+.no-customers-card {
+  margin: 20px 0;
+}
+
+.no-customers-card mat-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.no-customers-card mat-icon {
+  font-size: 48px; /* Larger icon */
+  margin-bottom: 10px;
+  color: #757575; /* Grey color for info icon */
+}
+
+table.mat-table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.action-footer {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.action-footer a mat-icon {
+  margin-right: 5px;
+}

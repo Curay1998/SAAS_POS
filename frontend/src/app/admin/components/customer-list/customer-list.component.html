@@ -1,37 +1,62 @@
-<h2>Customer List</h2>
+<div class="customer-list-container">
+  <mat-toolbar color="accent">
+    <span>Customer List</span>
+  </mat-toolbar>
 
-<div *ngIf="isLoading" class="loading-message">
-  <p>Loading customers...</p>
-</div>
+  <div *ngIf="isLoading" class="loading-shade">
+    <mat-spinner></mat-spinner>
+    <p>Loading customers...</p>
+  </div>
 
-<div *ngIf="errorMessage" class="error-message">
-  <p>{{ errorMessage }}</p>
-</div>
+  <div *ngIf="errorMessage" class="error-message-bar">
+    <mat-icon>error_outline</mat-icon>
+    <span>{{ errorMessage }}</span>
+  </div>
 
-<div *ngIf="!isLoading && !errorMessage && customers.length === 0" class="no-customers-message">
-  <p>No customers found.</p>
-</div>
+  <div *ngIf="!isLoading && !errorMessage && customers.length === 0" class="no-customers-card">
+    <mat-card>
+      <mat-card-content>
+        <mat-icon>info_outline</mat-icon>
+        <p>No customers found.</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
 
-<table *ngIf="!isLoading && !errorMessage && customers.length > 0">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Email</th>
-      <!-- Add more headers if needed, e.g., for actions -->
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let customer of customers">
-      <td>{{ customer.id }}</td>
-      <td>{{ customer.name }}</td>
-      <td>{{ customer.email }}</td>
-      <!-- Add more cells if needed -->
-    </tr>
-  </tbody>
-</table>
+  <table mat-table [dataSource]="customers" class="mat-elevation-z8"
+         *ngIf="!isLoading && !errorMessage && customers.length > 0">
 
-<!-- Optional: Add a button to navigate back or to other admin sections -->
-<div style="margin-top: 1rem;">
-  <a routerLink="/admin" class="btn btn-secondary">Back to Admin Dashboard</a>
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let customer"> {{customer.id}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let customer"> {{customer.name}} </td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let customer"> {{customer.email}} </td>
+    </ng-container>
+
+    <!-- Created At Column -->
+    <ng-container matColumnDef="created_at">
+      <th mat-header-cell *matHeaderCellDef> Registered On </th>
+      <td mat-cell *matCellDef="let customer"> {{customer.created_at | date:'medium'}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <div class="action-footer">
+    <a mat-stroked-button routerLink="/admin">
+      <mat-icon>arrow_back</mat-icon>
+      Back to Admin Dashboard
+    </a>
+  </div>
 </div>

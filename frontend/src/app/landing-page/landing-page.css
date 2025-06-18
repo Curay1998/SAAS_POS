@@ -1,6 +1,4 @@
 .landing-page-container {
-  font-family: Arial, sans-serif;
-  color: #333;
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
@@ -9,18 +7,15 @@
 section {
   padding: 40px 20px;
   margin-bottom: 20px;
-  border-bottom: 1px solid #eee;
 }
 
 .hero-section {
-  background-color: #f4f4f4;
   text-align: center;
-  padding: 60px 20px;
+  padding: 20px 0; /* Adjusted padding as mat-toolbar has its own padding */
 }
 
-.hero-section h1 {
-  font-size: 2.5em;
-  margin-bottom: 10px;
+.hero-section mat-toolbar {
+  margin-bottom: 20px;
 }
 
 .hero-section p {
@@ -28,24 +23,8 @@ section {
   margin-bottom: 20px;
 }
 
-.hero-section button {
-  padding: 10px 20px;
-  font-size: 1em;
-  color: white;
-  background-color: #007bff;
-  border: none;
-  cursor: pointer;
-}
-
 .features-section .feature, .pricing-section .pricing-tier {
   margin-bottom: 20px;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-.features-section h3, .pricing-section h3 {
-  margin-top: 0;
 }
 
 .pricing-section ul {
@@ -57,28 +36,12 @@ section {
   margin-bottom: 5px;
 }
 
-.contact-us-section form div {
-  margin-bottom: 10px;
+.contact-us-section form {
+  display: flex;
+  flex-direction: column;
 }
 
-.contact-us-section label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.contact-us-section input[type="text"],
-.contact-us-section input[type="email"],
-.contact-us-section textarea {
+.contact-us-section mat-form-field {
   width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  box-sizing: border-box; /* Prevents padding from affecting width */
-}
-
-.contact-us-section button {
-  padding: 10px 15px;
-  color: white;
-  background-color: #28a745;
-  border: none;
-  cursor: pointer;
+  margin-bottom: 10px;
 }
