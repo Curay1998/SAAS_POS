@@ -1,1 +1,45 @@
-/* Add any specific styles for CustomerSettingsComponent here */
+.settings-container {
+  max-width: 600px;
+  margin: 40px auto; /* Increased top/bottom margin */
+  padding: 20px;
+}
+
+mat-card-header {
+  padding-bottom: 16px; /* Add some space below the title */
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 20px; /* More space between form fields */
+}
+
+button[mat-raised-button] {
+  width: 100%;
+  padding: 12px 0; /* Make button taller */
+  font-size: 1em;
+  margin-top: 10px; /* Space above the button */
+}
+
+mat-progress-bar {
+  margin-top: 15px; /* Space between button and progress bar */
+}
+
+.success-message {
+  color: green;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.error-message {
+  color: red;
+  margin-top: 15px;
+  text-align: center;
+}
+
+mat-card-actions {
+  margin-top: 20px; /* Space above card actions */
+}
+
+mat-card-actions a mat-icon {
+  margin-right: 5px;
+}

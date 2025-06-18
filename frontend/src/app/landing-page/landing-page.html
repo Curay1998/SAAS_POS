@@ -1,50 +1,76 @@
 <div class="landing-page-container">
   <!-- Hero Section -->
   <section class="hero-section">
-    <h1>Welcome to Our SaaS Solution!</h1>
+    <mat-toolbar color="primary">
+      <span>Welcome to Our SaaS Solution!</span>
+    </mat-toolbar>
     <p>The best platform to manage your business efficiently.</p>
-    <button>Get Started</button>
+    <button mat-raised-button color="accent">Get Started</button>
   </section>
 
   <!-- Features Section -->
   <section class="features-section">
     <h2>Features</h2>
-    <div class="feature">
-      <h3>Feature One</h3>
-      <p>Description of feature one.</p>
-    </div>
-    <div class="feature">
-      <h3>Feature Two</h3>
-      <p>Description of feature two.</p>
-    </div>
-    <div class="feature">
-      <h3>Feature Three</h3>
-      <p>Description of feature three.</p>
-    </div>
+    <mat-card class="feature">
+      <mat-card-header>
+        <mat-card-title>Feature One</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Description of feature one.</p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="feature">
+      <mat-card-header>
+        <mat-card-title>Feature Two</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Description of feature two.</p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="feature">
+      <mat-card-header>
+        <mat-card-title>Feature Three</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Description of feature three.</p>
+      </mat-card-content>
+    </mat-card>
   </section>
 
   <!-- Pricing Section -->
   <section class="pricing-section">
     <h2>Pricing</h2>
-    <div class="pricing-tier">
-      <h3>Basic Plan</h3>
-      <p>$10/month</p>
-      <ul>
-        <li>Feature A</li>
-        <li>Feature B</li>
-      </ul>
-      <button>Choose Plan</button>
-    </div>
-    <div class="pricing-tier">
-      <h3>Pro Plan</h3>
-      <p>$30/month</p>
-      <ul>
-        <li>Feature A</li>
-        <li>Feature B</li>
-        <li>Feature C</li>
-      </ul>
-      <button>Choose Plan</button>
-    </div>
+    <mat-card class="pricing-tier">
+      <mat-card-header>
+        <mat-card-title>Basic Plan</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>$10/month</p>
+        <ul>
+          <li>Feature A</li>
+          <li>Feature B</li>
+        </ul>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-stroked-button color="primary">Choose Plan</button>
+      </mat-card-actions>
+    </mat-card>
+    <mat-card class="pricing-tier">
+      <mat-card-header>
+        <mat-card-title>Pro Plan</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>$30/month</p>
+        <ul>
+          <li>Feature A</li>
+          <li>Feature B</li>
+          <li>Feature C</li>
+        </ul>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-stroked-button color="primary">Choose Plan</button>
+      </mat-card-actions>
+    </mat-card>
   </section>
 
   <!-- About Us Section -->
@@ -57,19 +83,19 @@
   <section class="contact-us-section">
     <h2>Contact Us</h2>
     <form>
-      <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name">
-      </div>
-      <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email">
-      </div>
-      <div>
-        <label for="message">Message:</label>
-        <textarea id="message" name="message"></textarea>
-      </div>
-      <button type="submit">Send Message</button>
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" id="name" name="name">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" id="email" name="email">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Message</mat-label>
+        <textarea matInput id="message" name="message"></textarea>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Send Message</button>
     </form>
   </section>
 </div>

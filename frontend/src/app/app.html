@@ -1,14 +1,34 @@
-<nav>
-  <ul>
-    <li><a routerLink="/">Home</a></li>
-    <li><a routerLink="/admin">Admin Panel</a></li>
-    <ng-container *ngIf="!(authService.currentUser$ | async)">
-      <li><a routerLink="/login">Login</a></li>
-      <li><a routerLink="/register">Register</a></li>
-    </ng-container>
-    <li *ngIf="(authService.currentUser$ | async)">
-      <button (click)="logout()">Logout ({{ (authService.currentUser$ | async)?.name }})</button>
-    </li>
-  </ul>
-</nav>
-<router-outlet></router-outlet>
+<mat-toolbar color="primary" class="app-toolbar">
+  <a mat-button routerLink="/">
+    <mat-icon>home</mat-icon>
+    Home
+  </a>
+  <a mat-button routerLink="/admin">
+    <mat-icon>admin_panel_settings</mat-icon>
+    Admin Panel
+  </a>
+
+  <span class="toolbar-spacer"></span>
+
+  <ng-container *ngIf="!(authService.currentUser$ | async)">
+    <a mat-button routerLink="/login">
+      <mat-icon>login</mat-icon>
+      Login
+    </a>
+    <a mat-button routerLink="/register">
+      <mat-icon>person_add</mat-icon>
+      Register
+    </a>
+  </ng-container>
+
+  <ng-container *ngIf="(authService.currentUser$ | async) as user">
+    <span class="user-greeting">Hello, {{ user.name }}</span>
+    <button mat-icon-button (click)="logout()" matTooltip="Logout">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </ng-container>
+</mat-toolbar>
+
+<div class="app-content">
+  <router-outlet></router-outlet>
+</div>

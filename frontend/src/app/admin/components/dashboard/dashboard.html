@@ -1,70 +1,118 @@
 <div class="admin-dashboard">
-  <h2>Admin Dashboard - Customer Management</h2>
+  <mat-toolbar color="primary">
+    <span>Admin Dashboard - Customer Management</span>
+  </mat-toolbar>
 
-  <div style="margin-bottom: 1rem;">
-    <a routerLink="/admin/customers" class="btn btn-primary">View Customers Page</a>
+  <div class="action-buttons">
+    <a mat-raised-button color="accent" routerLink="/admin/customers">View Customers Page (Separate)</a>
   </div>
 
-  <div *ngIf="isLoading" class="loading">Loading...</div>
+  <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
   <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
-  <!-- Customer Form -->
-  <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
-    <h3>{{ editingCustomer ? 'Edit Customer' : 'Add New Customer' }}</h3>
-    <div>
-      <label for="name">Name:</label>
-      <input id="name" formControlName="name">
-      <div *ngIf="customerForm.get('name')?.invalid && customerForm.get('name')?.touched" class="error">
-        Name is required.
-      </div>
-    </div>
-    <div>
-      <label for="email">Email:</label>
-      <input id="email" type="email" formControlName="email">
-      <div *ngIf="customerForm.get('email')?.invalid && customerForm.get('email')?.touched" class="error">
-        Valid email is required.
-      </div>
-    </div>
-    <div>
-      <label for="password">Password:</label>
-      <input id="password" type="password" formControlName="password" [placeholder]="editingCustomer ? 'Leave blank to keep current' : 'Min 8 characters'">
-       <div *ngIf="customerForm.get('password')?.touched && ((!editingCustomer && !customerForm.get('password')?.value) || (customerForm.get('password')?.value && customerForm.get('password')?.value.length < 8))" class="error">
-        Password must be at least 8 characters. Required for new users.
-      </div>
-    </div>
-    <button type="submit" [disabled]="customerForm.invalid || isLoading">
-      {{ editingCustomer ? 'Update Customer' : 'Create Customer' }}
-    </button>
-    <button type="button" *ngIf="editingCustomer" (click)="onCancelEdit()" [disabled]="isLoading">Cancel Edit</button>
-  </form>
+  <!-- Customer Form Card -->
+  <mat-card class="form-card">
+    <mat-card-header>
+      <mat-card-title>{{ editingCustomer ? 'Edit Customer' : 'Add New Customer' }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput id="name" formControlName="name">
+          <mat-error *ngIf="customerForm.get('name')?.invalid && customerForm.get('name')?.touched">
+            Name is required.
+          </mat-error>
+        </mat-form-field>
 
-  <hr>
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput id="email" type="email" formControlName="email">
+          <mat-error *ngIf="customerForm.get('email')?.invalid && customerForm.get('email')?.touched">
+            Valid email is required.
+          </mat-error>
+        </mat-form-field>
 
-  <!-- Customer List -->
-  <h3>Customer List</h3>
-  <button (click)="loadCustomers()" [disabled]="isLoading">Refresh List</button>
-  <table *ngIf="!isLoading && customers.length > 0">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Created At</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let customer of customers">
-        <td>{{ customer.id }}</td>
-        <td>{{ customer.name }}</td>
-        <td>{{ customer.email }}</td>
-        <td>{{ customer.created_at | date:'short' }}</td>
-        <td>
-          <button (click)="onEdit(customer)" [disabled]="isLoading">Edit</button>
-          <button (click)="onDelete(customer.id)" [disabled]="isLoading">Delete</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <p *ngIf="!isLoading && customers.length === 0">No customers found.</p>
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input matInput id="password" type="password" formControlName="password"
+                 [placeholder]="editingCustomer ? 'Leave blank to keep current' : 'Min 8 characters'">
+          <mat-hint *ngIf="editingCustomer">Leave blank to keep current password.</mat-hint>
+          <mat-error *ngIf="customerForm.get('password')?.touched && ((!editingCustomer && !customerForm.get('password')?.value) || (customerForm.get('password')?.value && customerForm.get('password')?.value.length < 8))">
+            Password must be at least 8 characters. Required for new users.
+          </mat-error>
+        </mat-form-field>
+
+        <div class="form-buttons">
+          <button mat-raised-button color="primary" type="submit" [disabled]="customerForm.invalid || isLoading">
+            {{ editingCustomer ? 'Update Customer' : 'Create Customer' }}
+          </button>
+          <button mat-stroked-button type="button" *ngIf="editingCustomer" (click)="onCancelEdit()" [disabled]="isLoading">
+            Cancel Edit
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-divider></mat-divider>
+
+  <!-- Customer List Card -->
+  <mat-card class="list-card">
+    <mat-card-header>
+      <mat-card-title>Customer List</mat-card-title>
+      <button mat-icon-button (click)="loadCustomers()" [disabled]="isLoading" matTooltip="Refresh List">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngIf="isLoading" class="loading-shade">
+        <mat-spinner *ngIf="isLoading"></mat-spinner>
+      </div>
+
+      <table mat-table [dataSource]="customers" class="mat-elevation-z8" *ngIf="!isLoading && customers.length > 0">
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let customer"> {{customer.id}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let customer"> {{customer.name}} </td>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let customer"> {{customer.email}} </td>
+        </ng-container>
+
+        <!-- Created At Column -->
+        <ng-container matColumnDef="created_at">
+          <th mat-header-cell *matHeaderCellDef> Created At </th>
+          <td mat-cell *matCellDef="let customer"> {{customer.created_at | date:'short'}} </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let customer">
+            <button mat-icon-button color="primary" (click)="onEdit(customer)" [disabled]="isLoading" matTooltip="Edit Customer">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="onDelete(customer.id)" [disabled]="isLoading" matTooltip="Delete Customer">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <p *ngIf="!isLoading && customers.length === 0" class="no-customers">No customers found.</p>
+    </mat-card-content>
+  </mat-card>
 </div>

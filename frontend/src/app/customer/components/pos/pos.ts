@@ -1,5 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; // For *ngFor, *ngIf, etc.
+import { RouterModule } from '@angular/router'; // Import RouterModule
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
+import { MatListModule } from '@angular/material/list';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDividerModule } from '@angular/material/divider';
 
 // Placeholder interfaces for data structures (to be refined later)
 interface ProductCategory {
@@ -28,7 +39,20 @@ interface CartItem {
   templateUrl: './pos.html',
   styleUrls: ['./pos.css'],
   standalone: true,
-  imports: [CommonModule] // Import CommonModule for directives
+  imports: [
+    CommonModule,
+    RouterModule, // Add RouterModule
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatRippleModule,
+    MatListModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDividerModule
+  ]
 })
 export class PosComponent implements OnInit {
   // Placeholder data - to be replaced by service calls later

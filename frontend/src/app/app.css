@@ -1,0 +1,45 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif; /* Material Design font */
+}
+
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Ensure toolbar stays on top */
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto; /* Pushes items to the right */
+}
+
+.user-greeting {
+  margin-right: 16px;
+  font-size: 0.9em;
+}
+
+.app-toolbar a[mat-button], .app-toolbar button[mat-icon-button] {
+  min-width: auto; /* Adjust if needed for spacing */
+}
+
+.app-toolbar mat-icon {
+  margin-right: 4px; /* Space between icon and text in buttons */
+}
+
+.app-toolbar a[mat-button]:hover, .app-toolbar button[mat-icon-button]:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Subtle hover effect */
+}
+
+.app-content {
+  padding: 20px; /* Add padding around the main content area */
+  /* If using Angular Material theming, consider body class for theme background */
+}
+
+/* Ensure router-outlet content takes up available space if needed,
+   though often handled by specific page components */
+router-outlet + * { /* Selects the component rendered by router-outlet */
+  display: block;
+  /* Consider min-height if footer needs to be pushed down */
+  /* min-height: calc(100vh - 64px - 40px); /* 64px toolbar, 20px top/bottom padding */
+}
