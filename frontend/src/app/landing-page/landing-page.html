@@ -1,101 +1,166 @@
 <div class="landing-page-container">
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <mat-toolbar color="primary">
-      <span>Welcome to Our SaaS Solution!</span>
-    </mat-toolbar>
-    <p>The best platform to manage your business efficiently.</p>
-    <button mat-raised-button color="accent">Get Started</button>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">SaaSBrand</a>
+      <ul class="nav-menu">
+        <li><a href="#hero-section">Home</a></li>
+        <li><a href="#features-section">Features</a></li>
+        <li><a href="#pricing-section">Pricing</a></li>
+        <li><a href="#testimonials-section">Testimonials</a></li> <!-- Added Testimonials Link -->
+        <li><a href="#about-us-section">About</a></li>
+        <li><a href="#contact-us-section">Contact</a></li>
+      </ul>
+      <button class="nav-toggler" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section --> 
+  <section class="hero-section" id="hero-section"> <!-- Added ID -->
+    <div class="hero-content">
+      <h1>Welcome to Our SaaS Solution!</h1>
+      <p>The best platform to manage your business efficiently.</p>
+    </div>
+    <button class="cta-button">Get Started</button>
   </section>
 
   <!-- Features Section -->
-  <section class="features-section">
-    <h2>Features</h2>
-    <mat-card class="feature">
-      <mat-card-header>
-        <mat-card-title>Feature One</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p>Description of feature one.</p>
-      </mat-card-content>
-    </mat-card>
-    <mat-card class="feature">
-      <mat-card-header>
-        <mat-card-title>Feature Two</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p>Description of feature two.</p>
-      </mat-card-content>
-    </mat-card>
-    <mat-card class="feature">
-      <mat-card-header>
-        <mat-card-title>Feature Three</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p>Description of feature three.</p>
-      </mat-card-content>
-    </mat-card>
+  <section class="features-section" id="features-section"> <!-- Added ID -->
+    <h2 class="section-title">Key Features</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <i class="fas fa-star feature-icon"></i> <!-- Font Awesome Icon -->
+        <h3>Feature One</h3>
+        <p>Brief description highlighting the benefit of feature one.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-cogs feature-icon"></i> <!-- Font Awesome Icon -->
+        <h3>Feature Two</h3>
+        <p>Brief description highlighting the benefit of feature two.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-users feature-icon"></i> <!-- Font Awesome Icon -->
+        <h3>Feature Three</h3>
+        <p>Brief description highlighting the benefit of feature three.</p>
+      </div>
+    </div>
   </section>
 
   <!-- Pricing Section -->
-  <section class="pricing-section">
-    <h2>Pricing</h2>
-    <mat-card class="pricing-tier">
-      <mat-card-header>
-        <mat-card-title>Basic Plan</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p>$10/month</p>
-        <ul>
-          <li>Feature A</li>
-          <li>Feature B</li>
+  <section class="pricing-section" id="pricing-section"> <!-- Added ID -->
+    <h2 class="section-title">Flexible Pricing Plans</h2>
+    <div class="pricing-container">
+      <div class="pricing-tier">
+        <h3>Basic Plan</h3>
+        <p class="price">$10<span>/month</span></p>
+        <ul class="features-list">
+          <li><i class="fas fa-check"></i> Feature A</li>
+          <li><i class="fas fa-check"></i> Feature B</li>
+          <li><i class="fas fa-times"></i> Feature C (Basic)</li>
+          <li><i class="fas fa-times"></i> Feature D (Basic)</li>
         </ul>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-stroked-button color="primary">Choose Plan</button>
-      </mat-card-actions>
-    </mat-card>
-    <mat-card class="pricing-tier">
-      <mat-card-header>
-        <mat-card-title>Pro Plan</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p>$30/month</p>
-        <ul>
-          <li>Feature A</li>
-          <li>Feature B</li>
-          <li>Feature C</li>
+        <button class="cta-button-pricing">Choose Plan</button>
+      </div>
+      <div class="pricing-tier recommended-plan"> <!-- Recommended plan -->
+        <div class="recommended-badge">Recommended</div> <!-- Badge for recommended plan -->
+        <h3>Pro Plan</h3>
+        <p class="price">$30<span>/month</span></p>
+        <ul class="features-list">
+          <li><i class="fas fa-check"></i> Feature A</li>
+          <li><i class="fas fa-check"></i> Feature B</li>
+          <li><i class="fas fa-check"></i> Feature C (Pro)</li>
+          <li><i class="fas fa-times"></i> Feature D (Pro)</li>
         </ul>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-stroked-button color="primary">Choose Plan</button>
-      </mat-card-actions>
-    </mat-card>
+        <button class="cta-button-pricing">Choose Plan</button>
+      </div>
+      <div class="pricing-tier">
+        <h3>Enterprise Plan</h3>
+        <p class="price">$50<span>/month</span></p>
+        <ul class="features-list">
+          <li><i class="fas fa-check"></i> Feature A</li>
+          <li><i class="fas fa-check"></i> Feature B</li>
+          <li><i class="fas fa-check"></i> Feature C (Enterprise)</li>
+          <li><i class="fas fa-check"></i> Feature D (Enterprise)</li>
+        </ul>
+        <button class="cta-button-pricing">Choose Plan</button>
+      </div>
+    </div>
   </section>
 
+  <!-- Testimonials Section -->
+  <section class="testimonials-section" id="testimonials-section">
+    <h2 class="section-title">What Our Customers Say</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-avatar">
+          <i class="fas fa-user-circle"></i> <!-- Placeholder Icon -->
+        </div>
+        <blockquote class="testimonial-text">
+          "This SaaS solution has revolutionized how we manage our workflow. Highly recommended for its efficiency and ease of use!"
+        </blockquote>
+        <p class="testimonial-author">Jane Doe</p>
+        <p class="testimonial-role">CEO, Tech Solutions Inc.</p>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-avatar">
+          <i class="fas fa-user-circle"></i> <!-- Placeholder Icon -->
+        </div>
+        <blockquote class="testimonial-text">
+          "The customer support is outstanding, and the platform itself is incredibly powerful yet intuitive. A game changer for our business."
+        </blockquote>
+        <p class="testimonial-author">John Smith</p>
+        <p class="testimonial-role">Marketing Manager, Innovate Ltd.</p>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-avatar">
+          <i class="fas fa-user-circle"></i> <!-- Placeholder Icon -->
+        </div>
+        <blockquote class="testimonial-text">
+          "We've seen a significant boost in productivity since adopting this platform. The features are exactly what we needed."
+        </blockquote>
+        <p class="testimonial-author">Alice Brown</p>
+        <p class="testimonial-role">Operations Lead, Growth Co.</p>
+      </div>
+    </div>
+
+  </section>
+  <!-- End of Testimonials Section -->
+
   <!-- About Us Section -->
-  <section class="about-us-section">
-    <h2>About Us</h2>
+  <section class="about-us-section" id="about-us-section"> <!-- Added ID -->
+    <h2 class="section-title">About Us</h2>
     <p>We are a company dedicated to providing the best SaaS solutions.</p>
   </section>
 
-  <!-- Contact Us Section -->
-  <section class="contact-us-section">
-    <h2>Contact Us</h2>
-    <form>
-      <mat-form-field appearance="fill">
-        <mat-label>Name</mat-label>
-        <input matInput type="text" id="name" name="name">
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput type="email" id="email" name="email">
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Message</mat-label>
-        <textarea matInput id="message" name="message"></textarea>
-      </mat-form-field>
-      <button mat-raised-button color="primary" type="submit">Send Message</button>
-    </form>
+  <!-- Contact Us Section --> 
+  <section class="contact-us-section" id="contact-us-section"> <!-- Added ID -->
+    <h2 class="section-title">Get in Touch</h2>
+    <div class="contact-form-container">
+      <form>
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+          <!-- <div class="error-message">Name is required.</div> Example for error message -->
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+          <!-- <div class="error-message">Please enter a valid email.</div> -->
+        </div>
+        <div class="form-group">
+          <label for="subject">Subject</label> <!-- Added Subject field -->
+          <input type="text" id="subject" name="subject" placeholder="Enter the subject of your message">
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" placeholder="Enter your message" required></textarea>
+          <!-- <div class="error-message">Message cannot be empty.</div> -->
+        </div>
+        <button type="submit" class="cta-button-contact">Send Message</button>
+      </form>
+    </div>
+
   </section>
 </div>
