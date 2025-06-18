@@ -1,52 +1,81 @@
 <div class="pos-container">
-  <div style="margin-bottom: 1rem;">
-    <a routerLink="/customer/settings">Settings</a>
-  </div>
+  <mat-toolbar color="primary" class="pos-toolbar">
+    <span>Point of Sale</span>
+    <span class="toolbar-spacer"></span>
+    <a mat-button routerLink="/customer/settings">
+      <mat-icon>settings</mat-icon>
+      Settings
+    </a>
+  </mat-toolbar>
+
   <!-- Product Selection Area -->
   <div class="product-area">
-    <h2>Products</h2>
-    <div class="category-filter">
-      <button (click)="selectCategory(null)" [class.active]="selectedCategoryId === null">All Products</button>
-      <button *ngFor="let category of categories"
-              (click)="selectCategory(category.id)"
-              [class.active]="selectedCategoryId === category.id">
+    <mat-card-header>
+      <mat-card-title>Products</mat-card-title>
+    </mat-card-header>
+    <mat-button-toggle-group #categoryToggle="matButtonToggleGroup" (change)="selectCategory($event.value)" class="category-filter" [value]="selectedCategoryId">
+      <mat-button-toggle [value]="null">All Products</mat-button-toggle>
+      <mat-button-toggle *ngFor="let category of categories" [value]="category.id">
         {{ category.name }}
-      </button>
-    </div>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
 
     <div class="product-grid" *ngIf="filteredProducts.length > 0; else noProducts">
-      <div class="product-card" *ngFor="let product of filteredProducts" (click)="addToCart(product)">
-        <img [src]="product.imageUrl || 'https://via.placeholder.com/100?text=No+Image'" [alt]="product.name">
-        <h3>{{ product.name }}</h3>
-        <p>{{ product.price | currency }}</p>
-      </div>
+      <mat-card class="product-card" *ngFor="let product of filteredProducts" (click)="addToCart(product)" matRipple>
+        <img mat-card-image [src]="product.imageUrl || 'https://via.placeholder.com/150?text=No+Image'" [alt]="product.name">
+        <mat-card-content>
+          <h3>{{ product.name }}</h3>
+          <p>{{ product.price | currency }}</p>
+        </mat-card-content>
+      </mat-card>
     </div>
     <ng-template #noProducts>
-      <p>No products found in this category or system is loading.</p>
+      <div class="empty-state-message">
+        <mat-icon>info_outline</mat-icon>
+        <p>No products found in this category or system is loading.</p>
+      </div>
     </ng-template>
   </div>
 
   <!-- Cart / Order Summary Area -->
   <div class="cart-area">
-    <h2>Current Order</h2>
-    <div *ngIf="cart.length > 0; else emptyCart">
-      <div class="cart-item" *ngFor="let item of cart">
-        <span class="item-name">{{ item.productName }}</span>
-        <div class="item-controls">
-          <input type="number" [value]="item.quantity" min="1" (input)="updateQuantity(item.productId, +($any($event.target).value))" class="item-quantity">
-          <span>x {{ item.price | currency }}</span>
+    <mat-card-header>
+      <mat-card-title>Current Order</mat-card-title>
+    </mat-card-header>
+    <mat-card class="cart-summary-card">
+      <mat-card-content>
+        <div *ngIf="cart.length > 0; else emptyCart">
+          <mat-list>
+            <mat-list-item *ngFor="let item of cart" class="cart-item">
+              <span matListItemTitle class="item-name">{{ item.productName }}</span>
+              <div matListItemLine class="item-details">
+                <mat-form-field appearance="outline" class="item-quantity-field">
+                  <input matInput type="number" [value]="item.quantity" min="1"
+                         (input)="updateQuantity(item.productId, +($any($event.target).value))">
+                </mat-form-field>
+                <span>x {{ item.price | currency }}</span>
+              </div>
+              <span class="item-total">{{ item.total | currency }}</span>
+              <button mat-icon-button color="warn" (click)="removeFromCart(item.productId)" matListItemMeta class="remove-item-button" aria-label="Remove item">
+                <mat-icon>remove_circle_outline</mat-icon>
+              </button>
+            </mat-list-item>
+          </mat-list>
+          <mat-divider></mat-divider>
+          <div class="cart-total">
+            <strong>Total: {{ cartTotal | currency }}</strong>
+          </div>
+          <button mat-raised-button color="accent" class="checkout-button" (click)="checkout()" [disabled]="cart.length === 0">
+            Proceed to Checkout
+          </button>
         </div>
-        <span class="item-total">{{ item.total | currency }}</span>
-        <button (click)="removeFromCart(item.productId)" class="remove-item">X</button>
-      </div>
-      <hr>
-      <div class="cart-total">
-        <strong>Total: {{ cartTotal | currency }}</strong>
-      </div>
-      <button class="checkout-button" (click)="checkout()">Proceed to Checkout</button>
-    </div>
-    <ng-template #emptyCart>
-      <p>Your cart is empty. Click on products to add them.</p>
-    </ng-template>
+        <ng-template #emptyCart>
+          <div class="empty-state-message">
+            <mat-icon>shopping_cart_checkout</mat-icon>
+            <p>Your cart is empty. Click on products to add them.</p>
+          </div>
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>

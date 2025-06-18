@@ -1,23 +1,31 @@
 <div class="login-container">
-  <h2>Login</h2>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label for="email">Email:</label>
-      <input id="email" type="email" formControlName="email">
-      <div *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)" class="error">
-        <small *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</small>
-        <small *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format.</small>
-      </div>
-    </div>
-    <div>
-      <label for="password">Password:</label>
-      <input id="password" type="password" formControlName="password">
-      <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)" class="error">
-        <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
-      </div>
-    </div>
-    <button type="submit" [disabled]="loginForm.invalid">Login</button>
-    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
-  </form>
-  <p>Don't have an account? <a routerLink="/register">Register here</a></p>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput id="email" type="email" formControlName="email">
+          <mat-error *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)">
+            <small *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</small>
+            <small *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format.</small>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input matInput id="password" type="password" formControlName="password">
+          <mat-error *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+            <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
+          </mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Login</button>
+        <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <p>Don't have an account? <a routerLink="/register">Register here</a></p>
+    </mat-card-actions>
+  </mat-card>
 </div>

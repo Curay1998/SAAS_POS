@@ -1,6 +1,4 @@
 .landing-page-container {
-  font-family: Arial, sans-serif;
-  color: #333;
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
@@ -9,11 +7,10 @@
 section {
   padding: 40px 20px;
   margin-bottom: 20px;
-  border-bottom: 1px solid #eee;
 }
 
 /* Hero Section Styling */
-.hero-section {
+.hero-section { 
   /* Placeholder background gradient */
   background: linear-gradient(to right, #6dd5ed, #2193b0);
   color: white; /* Text color updated for better contrast with new background */
@@ -578,7 +575,7 @@ button:hover, .button:hover {
 .nav-menu li {
   margin-left: 25px; /* Slightly increased spacing */
 }
-
+ 
 .nav-menu li a {
   color: var(--text-color-light);
   text-decoration: none;
@@ -907,10 +904,8 @@ button:hover, .button:hover {
   font-weight: 600; /* Slightly bolder labels */
 }
 
-.contact-us-section input[type="text"],
-.contact-us-section input[type="email"],
-.contact-us-section textarea {
-  width: 100%;
+.contact-us-section mat-form-field {
+  width: 100%; 
   padding: 15px; /* Increased padding for better touch experience */
   border: 1px solid #ced4da; /* Standard Bootstrap border color */
   border-radius: 5px;

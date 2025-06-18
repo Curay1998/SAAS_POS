@@ -2,13 +2,38 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomerAdminService, AdminCustomerView } from '../../services/customer-admin.service';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RouterModule } from '@angular/router'; // Import RouterModule
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule, // Add RouterModule here
+    MatTableModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressBarModule,
+    MatToolbarModule,
+    MatDividerModule,
+    MatProgressSpinnerModule
+  ]
 })
 export class DashboardComponent implements OnInit {
   customers: AdminCustomerView[] = [];
@@ -16,6 +41,7 @@ export class DashboardComponent implements OnInit {
   editingCustomer: AdminCustomerView | null = null;
   errorMessage: string | null = null;
   isLoading: boolean = false;
+  displayedColumns: string[] = ['id', 'name', 'email', 'created_at', 'actions'];
 
   constructor(
     private customerAdminService: CustomerAdminService,

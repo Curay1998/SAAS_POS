@@ -1,30 +1,47 @@
-<div>
-  <h2>Customer Settings</h2>
-  <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label for="currency">Currency:</label>
-      <select id="currency" formControlName="currency">
-        <option *ngFor="let currency of currencies" [value]="currency.code">
-          {{ currency.name }} ({{ currency.code }})
-        </option>
-      </select>
-      <div *ngIf="settingsForm.get('currency')?.invalid && (settingsForm.get('currency')?.dirty || settingsForm.get('currency')?.touched)">
-        Currency is required.
-      </div>
-    </div>
+<div class="settings-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Customer Settings</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+          <mat-label>Currency</mat-label>
+          <mat-select id="currency" formControlName="currency">
+            <mat-option *ngFor="let currency of currencies" [value]="currency.code">
+              {{ currency.name }} ({{ currency.code }})
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="settingsForm.get('currency')?.invalid && (settingsForm.get('currency')?.dirty || settingsForm.get('currency')?.touched)">
+            Currency is required.
+          </mat-error>
+        </mat-form-field>
 
-    <div>
-      <label for="preferred_language">Preferred Language:</label>
-      <select id="preferred_language" formControlName="preferred_language">
-        <option *ngFor="let lang of languages" [value]="lang.code">
-          {{ lang.name }}
-        </option>
-      </select>
-      <div *ngIf="settingsForm.get('preferred_language')?.invalid && (settingsForm.get('preferred_language')?.dirty || settingsForm.get('preferred_language')?.touched)">
-        Preferred language is required.
-      </div>
-    </div>
+        <mat-form-field appearance="fill">
+          <mat-label>Preferred Language</mat-label>
+          <mat-select id="preferred_language" formControlName="preferred_language">
+            <mat-option *ngFor="let lang of languages" [value]="lang.code">
+              {{ lang.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="settingsForm.get('preferred_language')?.invalid && (settingsForm.get('preferred_language')?.dirty || settingsForm.get('preferred_language')?.touched)">
+            Preferred language is required.
+          </mat-error>
+        </mat-form-field>
 
-    <button type="submit" [disabled]="settingsForm.invalid">Save Settings</button>
-  </form>
+        <button mat-raised-button color="primary" type="submit" [disabled]="settingsForm.invalid || isLoading">
+          {{ isLoading ? 'Saving...' : 'Save Settings' }}
+        </button>
+        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+         <p *ngIf="successMessage" class="success-message">{{ successMessage }}</p>
+         <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+      </form>
+    </mat-card-content>
+     <mat-card-actions align="end">
+        <a mat-button routerLink="/customer/pos">
+          <mat-icon>arrow_back</mat-icon>
+          Back to POS
+        </a>
+    </mat-card-actions>
+  </mat-card>
 </div>
