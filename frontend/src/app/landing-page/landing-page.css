@@ -12,73 +12,1067 @@ section {
   border-bottom: 1px solid #eee;
 }
 
+/* Hero Section Styling */
 .hero-section {
-  background-color: #f4f4f4;
+  /* Placeholder background gradient */
+  background: linear-gradient(to right, #6dd5ed, #2193b0);
+  color: white; /* Text color updated for better contrast with new background */
   text-align: center;
-  padding: 60px 20px;
+  padding: 80px 20px; /* Increased padding */
+  display: flex; /* Using flexbox for centering content */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh; /* Make hero section take more viewport height */
+}
+
+.hero-content {
+  margin-bottom: 30px; /* Space between text and button */
 }
 
 .hero-section h1 {
-  font-size: 2.5em;
-  margin-bottom: 10px;
+  font-size: 3em; /* Larger font size */
+  margin-bottom: 15px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Subtle text shadow */
 }
 
 .hero-section p {
-  font-size: 1.2em;
-  margin-bottom: 20px;
+  font-size: 1.3em; /* Slightly larger paragraph font size */
+  margin-bottom: 30px; /* Increased space before CTA */
+  line-height: 1.6;
 }
 
-.hero-section button {
-  padding: 10px 20px;
-  font-size: 1em;
+.cta-button { /* Styling for the new CTA button class */
+  padding: 15px 30px; /* Larger button padding */
+  font-size: 1.2em; /* Larger button font size */
   color: white;
-  background-color: #007bff;
+  background-color: #ff6347; /* Prominent button color (Tomato) */
   border: none;
+  border-radius: 5px; /* Rounded corners */
   cursor: pointer;
+  text-transform: uppercase; /* Uppercase text for CTA */
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
 }
 
-.features-section .feature, .pricing-section .pricing-tier {
+.cta-button:hover {
+  background-color: #e5533d; /* Darker shade on hover */
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+/* Features Section Styling */
+.features-section {
+  text-align: center; /* Center the section title */
+  background-color: #ffffff; /* Light background for the section */
+}
+
+.features-section h2 {
+  font-size: 2.5em;
+  margin-bottom: 40px; /* Space below the section title */
+  color: #333;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+  gap: 30px; /* Space between cards */
+  text-align: left; /* Reset text alignment for card content */
+}
+
+.feature-card {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+.feature-icon {
+  font-size: 2.5em; /* Icon size */
+  color: #007bff; /* Icon color - can be themed per feature */
   margin-bottom: 20px;
-  padding: 20px;
+  display: block; /* Ensure margin bottom applies */
+  text-align: center; /* Center icon within the card */
+}
+
+.feature-card h3 {
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center; /* Center heading within the card */
+}
+
+.feature-card p {
+  font-size: 1em;
+  line-height: 1.6;
+  color: #555; /* Slightly lighter text color for description */
+  text-align: center; /* Center description text */
+}
+
+/* End of Features Section Styling */
+
+/* Pricing Section Styling */
+.pricing-section {
+  background-color: #f9f9f9; /* Light grey background for contrast */
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.pricing-section h2 {
+  font-size: 2.5em;
+  margin-bottom: 50px; /* More space below title */
+  color: #333;
+}
+
+.pricing-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  justify-content: center; /* Center tiers */
+  gap: 30px; /* Space between tiers */
+  align-items: stretch; /* Make tiers of same height if wrapped differently */
+}
+
+.pricing-tier {
+  background-color: #ffffff;
+  padding: 30px;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  flex: 1; /* Allow tiers to grow */
+  min-width: 280px; /* Minimum width before wrapping */
+  max-width: 350px; /* Maximum width of a tier */
+  display: flex;
+  flex-direction: column; /* Align content vertically */
+  position: relative; /* For badge positioning */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.features-section h3, .pricing-section h3 {
-  margin-top: 0;
+.pricing-tier:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
-.pricing-section ul {
+.pricing-tier h3 {
+  font-size: 1.8em;
+  color: #007bff; /* Theme color for plan names */
+  margin-bottom: 15px;
+}
+
+.price {
+  font-size: 2.2em;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.price span {
+  font-size: 0.5em;
+  font-weight: normal;
+  color: #777;
+}
+
+.features-list {
   list-style: none;
   padding: 0;
+  margin-bottom: 30px; /* Space before CTA */
+  text-align: left;
+  flex-grow: 1; /* Allows list to take available space, pushing button down */
 }
 
-.pricing-section ul li {
-  margin-bottom: 5px;
-}
-
-.contact-us-section form div {
+.features-list li {
   margin-bottom: 10px;
+  font-size: 1em;
+  color: #555;
 }
 
-.contact-us-section label {
-  display: block;
+.features-list li i {
+  margin-right: 8px;
+  color: #28a745; /* Green for check marks */
+}
+
+.features-list li i.fa-times {
+  color: #dc3545; /* Red for times marks */
+}
+
+.cta-button-pricing {
+  padding: 12px 25px;
+  font-size: 1.1em;
+  color: white;
+  background-color: #007bff; /* Primary button color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  margin-top: auto; /* Pushes button to the bottom */
+}
+
+.cta-button-pricing:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Recommended Plan Styling */
+.recommended-plan {
+  border: 2px solid #007bff; /* Prominent border */
+  transform: scale(1.05); /* Slightly larger */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.recommended-plan:hover {
+  transform: scale(1.05) translateY(-5px); /* Keep scale, add lift */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+
+.recommended-badge {
+  position: absolute;
+  top: -15px; /* Position above the card */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #007bff; /* Match border color */
+  color: white;
+  padding: 5px 15px;
+  font-size: 0.9em;
+  font-weight: bold;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.recommended-plan .cta-button-pricing {
+  background-color: #28a745; /* Green CTA for recommended plan */
+}
+
+.recommended-plan .cta-button-pricing:hover {
+  background-color: #1e7e34; /* Darker green on hover */
+}
+
+/* End of Pricing Section Styling */
+
+/* Testimonials Section Styling */
+.testimonials-section {
+  background-color: var(--light-bg-color); /* Consistent light background */
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+  gap: 30px; /* Space between testimonial cards */
+  max-width: 1100px; /* Limit overall width of the grid */
+  margin: 0 auto; /* Center the grid */
+}
+
+.testimonial-card {
+  background-color: #ffffff; /* White background for cards */
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07); /* Subtle shadow */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content like avatar */
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-avatar {
+  margin-bottom: 20px;
+}
+
+.testimonial-avatar i {
+  font-size: 4em; /* Large icon for avatar */
+  color: var(--primary-color); /* Use primary color for the icon */
+}
+
+/* If using <img> for avatars, you might style it like this:
+.testimonial-avatar img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+*/
+
+.testimonial-text {
+  font-size: 1.05em;
+  font-style: italic;
+  color: var(--text-color-muted);
+  margin-bottom: 20px;
+  line-height: 1.6;
+  position: relative; /* For potential quote styling */
+  padding: 0 10px; /* Add some padding if using quote marks */
+}
+
+/* Optional: Adding pseudo-elements for quotation marks
+.testimonial-text::before,
+.testimonial-text::after {
+  font-family: 'Georgia', serif; // Or another serif font for quotes
+  font-size: 2.5em;
+  color: var(--primary-color);
+  opacity: 0.5;
+  position: absolute;
+}
+
+.testimonial-text::before {
+  content: '“';
+  top: -10px;
+  left: -5px;
+}
+
+.testimonial-text::after {
+  content: '”';
+  bottom: -25px; // Adjust as needed
+  right: -5px;
+}
+*/
+
+.testimonial-author {
+  font-weight: 700;
+  color: var(--text-color-dark);
   margin-bottom: 5px;
+  font-size: 1.1em;
+}
+
+.testimonial-role {
+  font-size: 0.9em;
+  color: var(--secondary-color);
+  margin-bottom: 0;
+}
+/* End of Testimonials Section Styling */
+
+/* Contact Us Section Styling */
+.contact-us-section {
+  background-color: #ffffff; /* White background */
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.contact-us-section h2 {
+  font-size: 2.5em;
+  margin-bottom: 40px;
+  color: #333;
+}
+
+.contact-form-container {
+  max-width: 600px; /* Limit form width for better readability */
+  margin: 0 auto; /* Center the form container */
+  background-color: #f9f9f9; /* Light background for the form area */
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: left; /* Align text to left within the form container */
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 1em;
+  color: #333;
+  margin-bottom: 8px;
+  font-weight: bold;
 }
 
 .contact-us-section input[type="text"],
 .contact-us-section input[type="email"],
 .contact-us-section textarea {
   width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  box-sizing: border-box; /* Prevents padding from affecting width */
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 1em;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.contact-us-section button {
-  padding: 10px 15px;
-  color: white;
-  background-color: #28a745;
-  border: none;
-  cursor: pointer;
+.contact-us-section input[type="text"]:focus,
+.contact-us-section input[type="email"]:focus,
+.contact-us-section textarea:focus {
+  border-color: #007bff; /* Highlight focus with theme color */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.25); /* Subtle glow on focus */
+  outline: none;
 }
+
+.contact-us-section textarea {
+  resize: vertical; /* Allow vertical resize, disable horizontal */
+  min-height: 120px;
+}
+
+.cta-button-contact {
+  display: block; /* Make button take full width */
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 1.1em;
+  color: white;
+  background-color: #007bff; /* Consistent theme color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button-contact:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+.error-message {
+  color: #dc3545; /* Standard error color (red) */
+  font-size: 0.9em;
+  margin-top: 5px;
+  display: block; /* Ensure it takes its own line if used */
+}
+
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --accent-color: #ffc107; /* Example accent, may not be used extensively */
+  --light-bg-color: #f8f9fa;
+  --dark-bg-color: #343a40;
+  --text-color-dark: #212529;
+  --text-color-light: #ffffff;
+  --text-color-muted: #6c757d;
+  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --navbar-height: 70px; /* Define navbar height for scroll-padding */
+}
+
+/* Global Styles */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--navbar-height); /* Use variable for navbar height */
+}
+
+body {
+  font-family: var(--font-family-sans-serif);
+  color: var(--text-color-dark);
+  background-color: var(--light-bg-color); /* Default light background */
+  line-height: 1.6;
+  margin: 0; /* Reset default margin */
+  padding-top: var(--navbar-height); /* Ensure content starts below fixed navbar */
+}
+
+.landing-page-container {
+  max-width: 1200px; /* Consistent max-width */
+  margin: 0 auto;
+  padding: 0 15px; /* Add some horizontal padding for smaller screens */
+}
+
+section {
+  padding: 60px 20px; /* Consistent vertical padding */
+  margin-bottom: 0; /* Remove bottom margin as sections are distinct */
+  border-bottom: none; /* Remove default border, manage visually */
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700; /* Bolder headings */
+  line-height: 1.3;
+  margin-top: 0;
+  margin-bottom: 0.75em; /* Consistent bottom margin */
+  color: var(--text-color-dark);
+}
+
+h1 { font-size: 2.8em; }
+h2 { font-size: 2.4em; }
+h3 { font-size: 1.8em; }
+h4 { font-size: 1.5em; }
+
+p {
+  margin-bottom: 1em;
+  color: var(--text-color-muted); /* Default paragraph color */
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+  color: darken(var(--primary-color), 10%); /* Utility function like darken not available in pure CSS, use a pre-calculated darker shade */
+  color: #0056b3;
+}
+
+/* Buttons - General Styling (can be overridden by specific button classes) */
+button, .button { /* Added .button class for anchor tags styled as buttons */
+  padding: 10px 20px;
+  font-size: 1em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  border: 1px solid transparent;
+  font-weight: 500;
+}
+
+button:hover, .button:hover {
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+/* Helper class for consistent section titles */
+.section-title {
+  text-align: center;
+  margin-bottom: 50px; /* Increased space for section titles */
+  font-size: 2.5em; /* Consistent section title size */
+  color: var(--text-color-dark);
+}
+
+/* End of Global Styles */
+
+/* Navigation Bar Styling */
+.navbar {
+  background-color: var(--dark-bg-color); /* Use color variable */
+  color: var(--text-color-light);
+  padding: 0 20px; /* Adjusted padding */
+  height: var(--navbar-height);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Softer shadow */
+  display: flex; /* Use flex to center container vertically */
+  align-items: center; /* Vertically align nav content */
+}
+
+.nav-container {
+  max-width: 1200px;
+  width: 100%; /* Ensure container takes full width for centering */
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px; /* Consistent with .landing-page-container padding */
+}
+
+.nav-logo {
+  color: var(--text-color-light);
+  text-decoration: none;
+  font-size: 1.8em;
+  font-weight: bold;
+}
+
+.nav-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.nav-menu li {
+  margin-left: 25px; /* Slightly increased spacing */
+}
+
+.nav-menu li a {
+  color: var(--text-color-light);
+  text-decoration: none;
+  font-size: 1em;
+  padding: 8px 12px; /* Increased padding for easier clicking */
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-menu li a:hover,
+.nav-menu li a.active {
+  background-color: var(--primary-color);
+  color: var(--text-color-light);
+}
+
+.nav-toggler {
+  display: none;
+  background: none;
+  color: var(--text-color-light);
+  border: 1px solid var(--text-color-light);
+  padding: 8px 12px; /* Adjusted padding */
+  font-size: 1.5em;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Hero Section Styling */
+.hero-section {
+  background: linear-gradient(to right, var(--primary-color), #0056b3); /* Gradient with primary */
+  color: var(--text-color-light);
+  text-align: center;
+  padding: 100px 20px; /* Increased padding */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(80vh - var(--navbar-height)); /* Adjusted min-height */
+}
+
+.hero-content {
+  margin-bottom: 30px;
+}
+
+.hero-section h1 {
+  font-size: 3.2em; /* Slightly larger */
+  margin-bottom: 20px;
+  font-weight: 700;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  color: var(--text-color-light); /* Ensure heading is light */
+}
+
+.hero-section p {
+  font-size: 1.4em;
+  margin-bottom: 35px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.9); /* Slightly muted white for paragraph */
+}
+
+.cta-button {
+  padding: 15px 35px; /* Increased padding */
+  font-size: 1.25em;
+  color: var(--text-color-light);
+  background-color: var(--accent-color); /* Use accent for main CTA */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #e0a800; /* Darker accent */
+  transform: scale(1.05) translateY(-2px);
+}
+
+
+/* Features Section Styling */
+.features-section {
+  background-color: var(--light-bg-color); /* Use variable */
+  text-align: center;
+}
+
+.features-section h2 { /* Using .section-title will cover this if HTML is updated */
+  font-size: 2.5em;
+  margin-bottom: 50px;
+  color: var(--text-color-dark);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 35px; /* Increased gap */
+  text-align: left;
+}
+
+.feature-card {
+  background-color: #ffffff; /* White cards */
+  padding: 35px; /* Increased padding */
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08); /* Softer, slightly larger shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex; /* For vertical alignment of content */
+  flex-direction: column;
+  align-items: center; /* Center content */
+  text-align: center; /* Center text within card */
+}
+
+.feature-card:hover {
+  transform: translateY(-8px); /* More lift */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.feature-icon {
+  font-size: 3em; /* Larger icons */
+  color: var(--primary-color);
+  margin-bottom: 25px;
+}
+
+.feature-card h3 {
+  font-size: 1.6em; /* Slightly larger */
+  color: var(--text-color-dark);
+  margin-bottom: 15px;
+}
+
+.feature-card p {
+  font-size: 1em;
+  line-height: 1.6;
+  color: var(--text-color-muted);
+  flex-grow: 1; /* Ensure cards with less text still align buttons if any */
+}
+
+/* Pricing Section Styling */
+.pricing-section {
+  background-color: #ffffff; /* Alternate background */
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.pricing-section h2 { /* Using .section-title will cover this */
+  font-size: 2.5em;
+  margin-bottom: 50px;
+  color: var(--text-color-dark);
+}
+
+.pricing-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  align-items: stretch;
+}
+
+.pricing-tier {
+  background-color: var(--light-bg-color); /* Light bg for tiers */
+  padding: 35px; /* Increased padding */
+  border: 1px solid #e0e0e0; /* Lighter border */
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  flex: 1;
+  min-width: 280px;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricing-tier:hover {
+  transform: translateY(-8px); /* More lift */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.pricing-tier h3 {
+  font-size: 1.9em; /* Larger plan names */
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.price {
+  font-size: 2.5em; /* Larger price */
+  font-weight: 700;
+  color: var(--text-color-dark);
+  margin-bottom: 25px;
+}
+
+.price span {
+  font-size: 0.5em;
+  font-weight: normal;
+  color: var(--text-color-muted);
+}
+
+.features-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 30px;
+  text-align: left;
+  flex-grow: 1;
+}
+
+.features-list li {
+  margin-bottom: 12px; /* Increased spacing */
+  font-size: 1em;
+  color: var(--text-color-muted);
+  display: flex; /* Align icon and text */
+  align-items: center;
+}
+
+.features-list li i {
+  margin-right: 10px; /* Space after icon */
+  color: var(--primary-color); /* Consistent icon color */
+  font-size: 1.2em; /* Slightly larger icons in list */
+}
+
+.features-list li i.fa-times {
+  color: var(--secondary-color); /* Muted color for 'times' */
+}
+
+.cta-button-pricing {
+  padding: 12px 28px; /* Adjusted padding */
+  font-size: 1.1em;
+  color: var(--text-color-light);
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform */
+  margin-top: auto;
+}
+
+.cta-button-pricing:hover {
+  background-color: #0056b3; /* Darker primary */
+  transform: translateY(-2px); /* Consistent button hover */
+}
+
+.recommended-plan {
+  border: 2px solid var(--primary-color);
+  transform: scale(1.03); /* Slightly less aggressive scale */
+  box-shadow: 0 8px 30px rgba(0, 123, 255, 0.15); /* Primary color shadow */
+}
+
+.recommended-plan:hover {
+  transform: scale(1.03) translateY(-8px);
+  box-shadow: 0 10px 35px rgba(0, 123, 255, 0.2);
+}
+
+.recommended-badge {
+  position: absolute;
+  top: -18px; /* Adjusted position */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--primary-color);
+  color: var(--text-color-light);
+  padding: 6px 18px; /* Adjusted padding */
+  font-size: 0.9em;
+  font-weight: bold;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.recommended-plan .cta-button-pricing {
+  background-color: var(--accent-color); /* Use accent for recommended plan CTA */
+  color: var(--text-color-dark); /* Dark text on accent for contrast */
+}
+
+.recommended-plan .cta-button-pricing:hover {
+  background-color: #e0a800; /* Darker accent */
+  color: var(--text-color-dark);
+}
+
+/* About Us Section Styling */
+.about-us-section {
+  background-color: var(--light-bg-color);
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.about-us-section h2 { /* Using .section-title will cover this */
+  font-size: 2.5em;
+  margin-bottom: 40px;
+  color: var(--text-color-dark);
+}
+
+.about-us-section p {
+  font-size: 1.1em; /* Slightly larger paragraph for readability */
+  color: var(--text-color-muted);
+  max-width: 800px; /* Constrain width for better readability */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Contact Us Section Styling */
+.contact-us-section {
+  background-color: #ffffff; /* White background */
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.contact-us-section h2 { /* Using .section-title will cover this */
+  font-size: 2.5em;
+  margin-bottom: 40px;
+  color: var(--text-color-dark);
+}
+
+.contact-form-container {
+  max-width: 650px; /* Slightly wider form */
+  margin: 0 auto;
+  background-color: var(--light-bg-color);
+  padding: 40px; /* Increased padding */
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08); /* Consistent shadow */
+  text-align: left;
+}
+
+.form-group {
+  margin-bottom: 25px; /* Increased spacing */
+}
+
+.form-group label {
+  display: block;
+  font-size: 1em;
+  color: var(--text-color-dark); /* Darker labels for contrast */
+  margin-bottom: 10px; /* Increased space after label */
+  font-weight: 600; /* Slightly bolder labels */
+}
+
+.contact-us-section input[type="text"],
+.contact-us-section input[type="email"],
+.contact-us-section textarea {
+  width: 100%;
+  padding: 15px; /* Increased padding for better touch experience */
+  border: 1px solid #ced4da; /* Standard Bootstrap border color */
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 1em;
+  font-family: var(--font-family-sans-serif); /* Ensure form elements inherit font */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-us-section input[type="text"]:focus,
+.contact-us-section input[type="email"]:focus,
+.contact-us-section textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2); /* Softer focus glow */
+  outline: none;
+}
+
+.contact-us-section textarea {
+  resize: vertical;
+  min-height: 130px; /* Slightly taller */
+}
+
+.cta-button-contact {
+  display: block;
+  width: 100%;
+  padding: 15px 20px; /* Increased padding */
+  font-size: 1.15em; /* Slightly larger */
+  color: var(--text-color-light);
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cta-button-contact:hover {
+  background-color: #0056b3; /* Darker primary */
+  transform: translateY(-2px);
+}
+
+.error-message {
+  color: #dc3545; /* Bootstrap danger color */
+  font-size: 0.9em;
+  margin-top: 8px; /* Increased margin */
+  display: block;
+}
+
+/* Responsive Adjustments */
+
+/* Medium devices (tablets, less than 992px) */
+@media (max-width: 991.98px) {
+  h1 { font-size: 2.5em; }
+  h2, .section-title { font-size: 2.1em; } /* Adjust section titles */
+  h3 { font-size: 1.7em; }
+
+  .hero-section {
+    padding: 80px 20px;
+    min-height: calc(70vh - var(--navbar-height));
+  }
+  .hero-section h1 { font-size: 2.8em; }
+  .hero-section p { font-size: 1.25em; }
+
+  .features-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* Adjust minmax */
+  }
+}
+
+/* Small devices (landscape phones, less than 768px) */
+@media (max-width: 767.98px) {
+  html {
+    scroll-padding-top: calc(var(--navbar-height) - 10px); /* Adjust for potentially smaller navbar if height changes */
+  }
+  body {
+    padding-top: calc(var(--navbar-height) - 10px); /* If navbar height is reduced */
+  }
+  .navbar {
+    padding: 0 15px; /* Reduce padding */
+    height: calc(var(--navbar-height) - 10px); /* Example of reducing navbar height */
+  }
+  .testimonials-grid {
+    grid-template-columns: 1fr; /* Stack testimonials on smaller screens */
+    gap: 25px;
+  }
+  .testimonial-card {
+    padding: 25px;
+  }
+  .nav-menu {
+    display: none; /* Hidden for toggle */
+    /* Styles for when menu is toggled open by JS: */
+    /* flex-direction: column;
+    position: absolute;
+    top: calc(var(--navbar-height) - 10px);
+    left: 0;
+    width: 100%;
+    background-color: var(--dark-bg-color);
+    padding: 10px 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); */
+  }
+  /* .nav-menu.active { display: flex; } */ /* JS would toggle this class */
+  .nav-menu li { margin: 10px 0; text-align: center; }
+  .nav-menu li a { display: block; padding: 10px; }
+  .nav-toggler { display: block; } /* Show hamburger icon */
+
+  h1 { font-size: 2.2em; }
+  h2, .section-title { font-size: 1.9em; }
+  h3 { font-size: 1.5em; }
+
+  .hero-section {
+    padding: 60px 15px;
+    min-height: auto; /* Allow natural height */
+  }
+  .hero-section h1 { font-size: 2.4em; }
+  .hero-section p { font-size: 1.15em; }
+  .cta-button { padding: 12px 25px; font-size: 1.1em; }
+
+  .features-grid {
+    grid-template-columns: 1fr; /* Stack cards */
+    gap: 25px;
+  }
+  .feature-card, .pricing-tier { padding: 25px; }
+
+  .pricing-container {
+    flex-direction: column; /* Stack pricing tiers */
+    align-items: center; /* Center stacked tiers */
+  }
+  .pricing-tier {
+    width: 100%; /* Full width for stacked tiers */
+    max-width: 400px; /* Optional: limit max width of stacked tiers */
+    margin-bottom: 20px; /* Add margin between stacked tiers */
+  }
+  .recommended-plan { transform: scale(1); } /* Reset scale for stacked view */
+  .recommended-plan:hover { transform: translateY(-5px); } /* Simpler hover for stacked */
+
+  .contact-form-container { padding: 25px; }
+  .cta-button-contact, .cta-button-pricing { padding: 12px 18px; font-size: 1em; }
+}
+
+/* Extra small devices (phones, less than 576px) */
+@media (max-width: 575.98px) {
+  .landing-page-container { padding: 0 10px; }
+  section { padding: 40px 10px; } /* Reduce section padding */
+
+  h1 { font-size: 2em; }
+  h2, .section-title { font-size: 1.7em; }
+  h3 { font-size: 1.4em; }
+
+  .hero-section h1 { font-size: 2em; }
+  .hero-section p { font-size: 1em; }
+
+  .contact-form-container { padding: 20px; }
+  .form-group label { font-size: 0.95em; }
+  .contact-us-section input[type="text"],
+  .contact-us-section input[type="email"],
+  .contact-us-section textarea,
+  .cta-button-contact,
+  .cta-button-pricing {
+    font-size: 0.95em; /* Slightly smaller form elements and buttons */
+    padding: 10px 15px;
+  }
+}
+
+/* End of Responsive Adjustments */
+/* End of Navigation Bar Styling */
