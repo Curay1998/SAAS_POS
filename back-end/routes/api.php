@@ -49,6 +49,12 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::get('plans', [PlanController::class, 'index']);
     Route::get('plans/{plan}', [PlanController::class, 'show']);
     
+    // User profile
+    Route::get('user/profile', [\App\Http\Controllers\Api\ProfileController::class, 'show']);
+    Route::put('user/profile', [\App\Http\Controllers\Api\ProfileController::class, 'update']);
+    Route::post('user/profile/image', [\App\Http\Controllers\Api\ProfileImageController::class, 'store']);
+    Route::delete('user/profile/image', [\App\Http\Controllers\Api\ProfileImageController::class, 'destroy']);
+
     // Subscription management
     Route::prefix('subscription')->group(function () {
         Route::post('subscribe', [SubscriptionController::class, 'subscribe']);

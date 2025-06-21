@@ -19,7 +19,6 @@ export interface ProfileUpdateRequest {
   phone?: string;
   address?: string;
   bio?: string;
-  profileImage?: string;
 }
 
 export interface PasswordChangeRequest {
@@ -47,8 +46,8 @@ export const profileService = {
    * Update user profile
    */
   async updateProfile(profileData: ProfileUpdateRequest): Promise<UserProfile> {
-    const response = await apiClient.put<ApiResponse<UserProfile>>('/user/profile', profileData);
-    return response.data;
+    const response = await apiClient.put<any>('/user/profile', profileData);
+    return response.data ?? response; // support both wrapped and direct responses
   },
 
   /**
@@ -65,11 +64,7 @@ export const profileService = {
     const formData = new FormData();
     formData.append('profile_image', imageFile);
 
-    const response = await apiClient.post<ApiResponse<{ url: string }>>('/user/profile/image', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    const response = await apiClient.post<ApiResponse<{ url: string }>>('/user/profile/image', formData);
 
     return response.data.url;
   },
@@ -115,10 +110,7 @@ export const profileService = {
    * Export user data
    */
   async exportUserData(): Promise<Blob> {
-    const response = await apiClient.get('/user/export', {
-      responseType: 'blob',
-    });
-    return response;
+    return apiClient.getBlob('/user/export');
   },
 };
 

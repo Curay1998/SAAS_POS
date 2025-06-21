@@ -21,19 +21,27 @@ export class ApiClient {
     const config: RequestInit = {
       ...options,
       headers: {
-        'Content-Type': 'application/json',
         'Accept': 'application/json',
         ...(token && { Authorization: `Bearer ${token}` }),
         ...options.headers,
       },
     };
 
+    if (config.body instanceof FormData) {
+      delete (config.headers as Record<string, string>)['Content-Type'];
+    }
+
     try {
       const response = await fetch(`${this.baseURL}${endpoint}`, config);
       
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || `HTTP ${response.status}: ${response.statusText}`);
+        let errorMessage = errorData.message || `HTTP ${response.status}: ${response.statusText}`;
+        if (errorData.errors) {
+            const errorDetails = Object.values(errorData.errors).flat().join(' ');
+            errorMessage += ` (${errorDetails})`;
+        }
+        throw new Error(errorMessage);
       }
 
       return await response.json();
@@ -65,6 +73,30 @@ export class ApiClient {
 
   async get<T>(endpoint: string): Promise<T> {
     return this.request<T>(endpoint, { method: 'GET' });
+  }
+
+  async getBlob(endpoint: string): Promise<Blob> {
+    const token = this.getAuthToken();
+    const config: RequestInit = {
+      method: 'GET',
+      headers: {
+        ...(token && { Authorization: `Bearer ${token}` }),
+      },
+    };
+
+    const response = await fetch(`${this.baseURL}${endpoint}`, config);
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      let errorMessage = errorData.message || `HTTP ${response.status}: ${response.statusText}`;
+      if (errorData.errors) {
+          const errorDetails = Object.values(errorData.errors).flat().join(' ');
+          errorMessage += ` (${errorDetails})`;
+      }
+      throw new Error(errorMessage);
+    }
+
+    return response.blob();
   }
 
   async post<T>(endpoint: string, data?: any, options?: RequestInit): Promise<T> {

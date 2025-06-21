@@ -1,5 +1,7 @@
 'use client';
 
+import { profileService } from '@/lib/profile';
+
 import { useAuth } from '@/contexts/AuthContext';
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
@@ -51,17 +53,29 @@ export function ProfileSettingsTab() {
     }, [user]);
 
     const loadProfileData = async () => {
-        // TODO: Implement API call to load user profile data
-        // For now, using user data from auth context
-        if (user) {
+        try {
+            const fetched = await profileService.getProfile();
             setProfileData({
-                name: user.name || '',
-                email: user.email || '',
-                phone: user.phone || '',
-                address: user.address || '',
-                bio: user.bio || '',
-                profileImage: user.profileImage || '',
+                name: fetched.name,
+                email: fetched.email,
+                phone: fetched.phone || '',
+                address: fetched.address || '',
+                bio: fetched.bio || '',
+                profileImage: fetched.profileImage || '',
             });
+        } catch (err) {
+            console.error(err);
+            // Fallback to auth context if API fails
+            if (user) {
+                setProfileData({
+                    name: user.name || '',
+                    email: user.email || '',
+                    phone: user.phone || '',
+                    address: user.address || '',
+                    bio: user.bio || '',
+                    profileImage: user.profileImage || '',
+                });
+            }
         }
     };
 
@@ -73,9 +87,8 @@ export function ProfileSettingsTab() {
         setError('');
 
         try {
-            // Resize the image before uploading
-            const resizedImage = await resizeImage(file, 400, 400, 0.8);
-            setProfileData(prev => ({ ...prev, profileImage: resizedImage }));
+            const imageUrl = await profileService.uploadProfileImage(file);
+            setProfileData(prev => ({ ...prev, profileImage: imageUrl }));
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to upload image');
         } finally {
@@ -97,15 +110,22 @@ export function ProfileSettingsTab() {
         setSuccess('');
 
         try {
-            // TODO: Implement API call to update profile
-            // const response = await profileService.updateProfile(profileData);
-            
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
+            const updatePayload = {
+                name: profileData.name,
+                email: profileData.email,
+                phone: profileData.phone || undefined,
+                address: profileData.address || undefined,
+                bio: profileData.bio || undefined,
+            };
+            const updated = await profileService.updateProfile(updatePayload);
             setSuccess('Profile updated successfully!');
+
+            // Update auth context user to reflect changes
+            if (user) {
+                Object.assign(user, updated);
+            }
             setIsEditing(false);
-            
+
             // Clear success message after 3 seconds
             setTimeout(() => setSuccess(''), 3000);
         } catch (err) {
@@ -252,8 +272,8 @@ export function ProfileSettingsTab() {
                                     <input
                                         type="email"
                                         value={profileData.email}
-                                        onChange={(e) => handleInputChange('email', e.target.value)}
-                                        disabled={!isEditing}
+                                        readOnly
+                                        disabled
                                         className="appearance-none block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white sm:text-sm disabled:bg-gray-50 disabled:text-gray-500 dark:disabled:bg-gray-800"
                                         placeholder="Enter your email"
                                     />
@@ -367,7 +387,7 @@ export function ProfileSettingsTab() {
                                     Member Since
                                 </p>
                                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                                    {user?.created_at ? new Date(user.created_at).toLocaleDateString() : 'N/A'}
+                                    {user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}
                                 </p>
                             </div>
                         </div>
