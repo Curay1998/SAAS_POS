@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { CustomerSidebar } from './CustomerSidebar';
 import { Bell, Search } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { NotificationBell } from '@/contexts/NotificationContext';
 
 interface CustomerLayoutProps {
     children: React.ReactNode;
@@ -30,7 +31,40 @@ export function CustomerLayout({ children, title, description }: CustomerLayoutP
             >
                 {/* Top Header */}
                 <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-30">
-                    <div className="px-4 sm:px-6 lg:px-8"></div>
+                    <div className="px-4 sm:px-6 lg:px-8 py-4">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                {title && (
+                                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                                        {title}
+                                    </h1>
+                                )}
+                                {description && (
+                                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                                        {description}
+                                    </p>
+                                )}
+                            </div>
+                            <div className="flex items-center space-x-4">
+                                <NotificationBell />
+                                <div className="flex items-center space-x-3">
+                                    <div className="text-right">
+                                        <p className="text-sm font-medium text-gray-900 dark:text-white">
+                                            {user?.name}
+                                        </p>
+                                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                                            {user?.email}
+                                        </p>
+                                    </div>
+                                    <div className="h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                                        <span className="text-sm font-semibold text-white">
+                                            {user?.name?.split(' ').map(n => n[0]).join('').toUpperCase()}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </header>
 
                 {/* Page content */}

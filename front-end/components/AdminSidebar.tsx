@@ -42,6 +42,12 @@ export function AdminSidebar({ isCollapsed = false, onToggle }: AdminSidebarProp
             description: 'Overview and analytics',
         },
         {
+            name: 'Analytics',
+            href: '/admin/analytics',
+            icon: Activity,
+            description: 'System analytics and insights',
+        },
+        {
             name: 'Team',
             icon: Users,
             description: 'Manage team members',

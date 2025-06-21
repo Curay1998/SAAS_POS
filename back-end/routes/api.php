@@ -9,6 +9,9 @@ use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PlanController;
 use App\Http\Controllers\Api\SubscriptionController;
+use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\Api\TeamInvitationController;
+use App\Http\Controllers\Api\AnalyticsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,10 +29,19 @@ Route::prefix('v1/auth')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
     
+    // Password reset routes (public)
+    Route::post('password/email', [AuthController::class, 'sendPasswordResetLink']);
+    Route::post('password/reset', [AuthController::class, 'resetPassword']);
+    
+    // Email verification routes
+    Route::get('email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
+    
     // Protected auth routes
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('logout', [AuthController::class, 'logout']);
         Route::get('user', [AuthController::class, 'user']);
+        Route::post('change-password', [AuthController::class, 'changePassword']);
+        Route::post('email/verification-notification', [AuthController::class, 'sendVerificationEmail']);
     });
 });
 
@@ -54,6 +66,17 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::put('user/profile', [\App\Http\Controllers\Api\ProfileController::class, 'update']);
     Route::post('user/profile/image', [\App\Http\Controllers\Api\ProfileImageController::class, 'store']);
     Route::delete('user/profile/image', [\App\Http\Controllers\Api\ProfileImageController::class, 'destroy']);
+
+    // Notification preferences
+    Route::get('notifications/preferences', [NotificationController::class, 'getPreferences']);
+    Route::put('notifications/preferences', [NotificationController::class, 'updatePreferences']);
+
+    // Team invitations
+    Route::post('team/invite', [TeamInvitationController::class, 'inviteUser']);
+    Route::post('team/accept-invitation', [TeamInvitationController::class, 'acceptInvitation']);
+    Route::post('team/decline-invitation', [TeamInvitationController::class, 'declineInvitation']);
+    Route::get('team/pending-invitations', [TeamInvitationController::class, 'getPendingInvitations']);
+    Route::get('projects/{project}/invitations', [TeamInvitationController::class, 'getProjectInvitations']);
 
     // Subscription management
     Route::prefix('subscription')->group(function () {
@@ -83,5 +106,14 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
         Route::patch('plans/{plan}/toggle-status', [PlanController::class, 'toggleStatus']);
         Route::patch('plans/{plan}/toggle-archive', [PlanController::class, 'toggleArchive']);
         Route::post('plans/{plan}/sync-stripe', [PlanController::class, 'syncWithStripe']);
+        
+        // Analytics and reporting
+        Route::prefix('analytics')->group(function () {
+            Route::get('overview', [AnalyticsController::class, 'getSystemOverview']);
+            Route::get('users', [AnalyticsController::class, 'getUserAnalytics']);
+            Route::get('projects', [AnalyticsController::class, 'getProjectAnalytics']);
+            Route::get('tasks', [AnalyticsController::class, 'getTaskAnalytics']);
+            Route::get('teams', [AnalyticsController::class, 'getTeamAnalytics']);
+        });
     });
 });

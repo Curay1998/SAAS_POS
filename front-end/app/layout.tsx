@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { ToastProvider } from '@/contexts/ToastContext';
+import { NotificationProvider } from '@/contexts/NotificationContext';
 
 export const metadata: Metadata = {
     title: 'TaskFlow - Project Management & Team Collaboration Platform',
@@ -32,7 +34,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     return (
         <html lang="en">
             <body className="antialiased">
-                <AuthProvider>{children}</AuthProvider>
+                <ToastProvider>
+                    <AuthProvider>
+                        <NotificationProvider>
+                            {children}
+                        </NotificationProvider>
+                    </AuthProvider>
+                </ToastProvider>
             </body>
         </html>
     );

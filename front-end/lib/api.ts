@@ -7,6 +7,14 @@ export interface ApiError {
 
 export class ApiClient {
   private baseURL: string;
+  private static instance: ApiClient;
+
+  public static getInstance(): ApiClient {
+    if (!ApiClient.instance) {
+      ApiClient.instance = new ApiClient();
+    }
+    return ApiClient.instance;
+  }
 
   constructor(baseURL: string = API_BASE_URL) {
     this.baseURL = baseURL;
@@ -143,4 +151,4 @@ export class ApiClient {
   }
 }
 
-export const apiClient = new ApiClient();
+export const apiClient = ApiClient.getInstance();

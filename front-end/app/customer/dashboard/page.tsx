@@ -21,6 +21,7 @@ import {
     CreditCard,
 } from 'lucide-react';
 import { SubscriptionDashboard } from '@/components/SubscriptionDashboard';
+import { PendingInvitations } from '@/components/PendingInvitations';
 import { planService } from '@/lib/plans';
 import TrialStatus from '@/components/TrialStatus';
 
@@ -146,6 +147,11 @@ function CustomerDashboardContent() {
 
             {/* Trial Status */}
             <TrialStatus className="mb-8" />
+
+            {/* Pending Invitations */}
+            <div className="mb-8">
+                <PendingInvitations />
+            </div>
 
             {/* Stats Grid */}
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-8">

@@ -13,14 +13,15 @@ import {
     Calendar,
     Activity,
 } from 'lucide-react';
+import { AuthService } from '@/lib/auth';
+import { useToast } from '@/contexts/ToastContext';
 
 export function SecuritySettingsTab() {
     const [showPasswordForm, setShowPasswordForm] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
     const [showCurrentPassword, setShowCurrentPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
+    const { success: showSuccess, error: showError } = useToast();
 
     const [passwordData, setPasswordData] = useState({
         currentPassword: '',
@@ -32,38 +33,38 @@ export function SecuritySettingsTab() {
         e.preventDefault();
         
         if (passwordData.newPassword !== passwordData.confirmPassword) {
-            setError('New passwords do not match');
+            showError('New passwords do not match');
             return;
         }
 
         if (passwordData.newPassword.length < 8) {
-            setError('New password must be at least 8 characters long');
+            showError('New password must be at least 8 characters long');
             return;
         }
 
         setIsLoading(true);
-        setError('');
-        setSuccess('');
 
         try {
-            // TODO: Implement API call to change password
-            // const response = await authService.changePassword(passwordData);
+            const authService = AuthService.getInstance();
+            const result = await authService.changePassword(
+                passwordData.currentPassword,
+                passwordData.newPassword,
+                passwordData.confirmPassword
+            );
             
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            setSuccess('Password changed successfully!');
-            setShowPasswordForm(false);
-            setPasswordData({
-                currentPassword: '',
-                newPassword: '',
-                confirmPassword: '',
-            });
-            
-            // Clear success message after 3 seconds
-            setTimeout(() => setSuccess(''), 3000);
+            if (result.success) {
+                showSuccess(result.message || 'Password changed successfully!');
+                setShowPasswordForm(false);
+                setPasswordData({
+                    currentPassword: '',
+                    newPassword: '',
+                    confirmPassword: '',
+                });
+            } else {
+                showError(result.error || 'Failed to change password');
+            }
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Failed to change password');
+            showError(err instanceof Error ? err.message : 'Failed to change password');
         } finally {
             setIsLoading(false);
         }
@@ -89,20 +90,6 @@ export function SecuritySettingsTab() {
 
     return (
         <div className="space-y-6">
-            {/* Success/Error Messages */}
-            {success && (
-                <div className="bg-green-50 dark:bg-green-900/50 border border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 px-4 py-3 rounded-lg flex items-center">
-                    <CheckCircle className="h-5 w-5 mr-2" />
-                    {success}
-                </div>
-            )}
-
-            {error && (
-                <div className="bg-red-50 dark:bg-red-900/50 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-4 py-3 rounded-lg flex items-center">
-                    <AlertTriangle className="h-5 w-5 mr-2" />
-                    {error}
-                </div>
-            )}
 
             {/* Password Management */}
             <div className="bg-white dark:bg-gray-800 shadow-lg rounded-xl border border-gray-200 dark:border-gray-700">

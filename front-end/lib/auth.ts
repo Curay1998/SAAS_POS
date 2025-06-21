@@ -322,4 +322,26 @@ export class AuthService {
             throw error;
         }
     }
+
+    async changePassword(
+        currentPassword: string,
+        newPassword: string,
+        confirmPassword: string
+    ): Promise<{ success: boolean; message?: string; error?: string }> {
+        try {
+            const response = await apiClient.post<{ message: string }>('/auth/change-password', {
+                current_password: currentPassword,
+                password: newPassword,
+                password_confirmation: confirmPassword,
+            });
+
+            return { success: true, message: response.message };
+        } catch (error) {
+            console.error('Change password error:', error);
+            return { 
+                success: false, 
+                error: error instanceof Error ? error.message : 'Failed to change password' 
+            };
+        }
+    }
 }
