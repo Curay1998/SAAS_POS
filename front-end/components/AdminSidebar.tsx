@@ -151,6 +151,8 @@ export function AdminSidebar({ isCollapsed = false, onToggle }: AdminSidebarProp
                                             ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/25'
                                             : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'
                                     }`}
+                                    aria-expanded={isTeamDropdownOpen}
+                                    aria-controls={isCollapsed ? undefined : `admin-team-submenu`}
                                     title={isCollapsed ? item.name : undefined}
                                 >
                                     <Icon
@@ -184,7 +186,7 @@ export function AdminSidebar({ isCollapsed = false, onToggle }: AdminSidebarProp
 
                                 {/* Dropdown Items */}
                                 {isTeamDropdownOpen && !isCollapsed && (
-                                    <div className="ml-4 space-y-1 border-l border-gray-200 dark:border-gray-700 pl-4">
+                                    <div id="admin-team-submenu" className="ml-4 space-y-1 border-l border-gray-200 dark:border-gray-700 pl-4" role="group">
                                         {item.dropdownItems.map((subItem) => {
                                             const SubIcon = subItem.icon;
                                             const subActive = isActive(subItem.href);
@@ -198,6 +200,7 @@ export function AdminSidebar({ isCollapsed = false, onToggle }: AdminSidebarProp
                                                             ? 'bg-blue-100 text-blue-900 dark:bg-blue-900/50 dark:text-blue-200'
                                                             : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white'
                                                     }`}
+                                                    aria-current={subActive ? 'page' : undefined}
                                                 >
                                                     <SubIcon
                                                         className={`h-4 w-4 mr-2 transition-colors ${
@@ -205,12 +208,13 @@ export function AdminSidebar({ isCollapsed = false, onToggle }: AdminSidebarProp
                                                                 ? 'text-blue-600 dark:text-blue-400'
                                                                 : 'text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300'
                                                         }`}
+                                                        aria-hidden="true"
                                                     />
                                                     <div className="flex-1 text-left">
                                                         <div className="font-medium text-xs">{subItem.name}</div>
                                                     </div>
                                                     {subActive && (
-                                                        <div className="w-1.5 h-1.5 bg-blue-600 dark:bg-blue-400 rounded-full ml-2" />
+                                                        <div className="w-1.5 h-1.5 bg-blue-600 dark:bg-blue-400 rounded-full ml-2" aria-hidden="true" />
                                                     )}
                                                 </button>
                                             );
@@ -233,6 +237,8 @@ export function AdminSidebar({ isCollapsed = false, onToggle }: AdminSidebarProp
                                     : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'
                             }`}
                             title={isCollapsed ? item.name : undefined}
+                            aria-label={isCollapsed ? item.name : undefined}
+                            aria-current={active ? 'page' : undefined}
                         >
                             <Icon
                                 className={`h-5 w-5 ${
@@ -242,6 +248,7 @@ export function AdminSidebar({ isCollapsed = false, onToggle }: AdminSidebarProp
                                         ? 'text-white'
                                         : 'text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300'
                                 }`}
+                                aria-hidden="true"
                             />
 
                             {!isCollapsed && (
@@ -251,7 +258,7 @@ export function AdminSidebar({ isCollapsed = false, onToggle }: AdminSidebarProp
                                 </div>
                             )}
                             {active && !isCollapsed && (
-                                <div className="w-2 h-2 bg-white rounded-full ml-2" />
+                                <div className="w-2 h-2 bg-white rounded-full ml-2" aria-hidden="true" />
                             )}
                         </button>
                     );
@@ -285,16 +292,20 @@ export function AdminSidebar({ isCollapsed = false, onToggle }: AdminSidebarProp
                 <button
                     onClick={() => setIsMobileOpen(true)}
                     className="fixed top-4 left-4 z-50 p-2 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700"
+                    aria-label="Open admin menu"
+                    aria-expanded={isMobileOpen}
+                    aria-controls="admin-mobile-sidebar"
                 >
                     <Menu className="h-5 w-5 text-gray-600 dark:text-gray-400" />
                 </button>
 
                 {/* Mobile sidebar overlay */}
                 {isMobileOpen && (
-                    <div className="fixed inset-0 z-50 lg:hidden">
+                    <div id="admin-mobile-sidebar" className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true">
                         <div
                             className="fixed inset-0 bg-gray-600 bg-opacity-75"
                             onClick={() => setIsMobileOpen(false)}
+                            aria-hidden="true"
                         />
 
                         <div className="relative flex-1 flex flex-col max-w-xs w-full bg-white dark:bg-gray-800 shadow-xl">
@@ -302,11 +313,12 @@ export function AdminSidebar({ isCollapsed = false, onToggle }: AdminSidebarProp
                                 <button
                                     onClick={() => setIsMobileOpen(false)}
                                     className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                    aria-label="Close admin menu"
                                 >
                                     <X className="h-6 w-6 text-white" />
                                 </button>
                             </div>
-                            <div className="flex-1 h-0 overflow-y-auto">
+                            <div className="flex-1 h-0 overflow-y-auto" role="navigation" aria-label="Admin menu">
                                 <SidebarContent />
                             </div>
                         </div>

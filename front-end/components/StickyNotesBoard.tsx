@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useMemo } from 'react';
 import { StickyNote } from './StickyNote';
-import { Plus, Home, ArrowLeft, Palette, Download, Upload, Trash2 } from 'lucide-react';
+import { Plus, Home, ArrowLeft, Palette, Download, Upload, Trash2, SearchIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export interface Note {
@@ -43,6 +43,7 @@ export function StickyNotesBoard() {
     const [notes, setNotes] = useState<Note[]>([]);
     const [selectedNoteId, setSelectedNoteId] = useState<string | null>(null);
     const [maxZIndex, setMaxZIndex] = useState(1);
+    const [searchTerm, setSearchTerm] = useState('');
     const boardRef = useRef<HTMLDivElement>(null);
 
     const createNote = useCallback(() => {
@@ -172,6 +173,15 @@ export function StickyNotesBoard() {
 
     const selectedNote = selectedNoteId ? notes.find((note) => note.id === selectedNoteId) : null;
 
+    const filteredNotes = useMemo(() => {
+        if (!searchTerm) {
+            return notes;
+        }
+        return notes.filter(note =>
+            note.content.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    }, [notes, searchTerm]);
+
     return (
         <div className="h-full bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
             {/* Toolbar */}
@@ -179,10 +189,24 @@ export function StickyNotesBoard() {
                 <div className="px-6 py-4">
                     <div className="flex justify-between items-center">
                         <div className="flex items-center space-x-4">
+                            {/* Search Input */}
+                            <div className="relative">
+                                <label htmlFor="search-notes-input" className="sr-only">Search notes</label>
+                                <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" aria-hidden="true" />
+                                <input
+                                    id="search-notes-input"
+                                    type="text"
+                                    placeholder="Search notes..."
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    className="pl-10 pr-4 py-2 w-64 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-yellow-500 focus:border-yellow-500"
+                                    aria-label="Search sticky notes"
+                                />
+                            </div>
                             <div className="flex items-center space-x-2">
-                                <Palette className="h-5 w-5 text-yellow-500" />
-                                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    {notes.length} {notes.length === 1 ? 'note' : 'notes'}
+                                <Palette className="h-5 w-5 text-yellow-500" aria-hidden="true" />
+                                <span className="text-sm font-medium text-gray-700 dark:text-gray-300" aria-live="polite">
+                                    {filteredNotes.length} {filteredNotes.length === 1 ? 'note' : 'notes'} (of {notes.length})
                                 </span>
                             </div>
                         </div>
@@ -191,8 +215,9 @@ export function StickyNotesBoard() {
                             <button
                                 onClick={createNote}
                                 className="flex items-center space-x-2 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition-colors shadow-lg hover:shadow-xl"
+                                aria-label="Create new sticky note"
                             >
-                                <Plus className="h-4 w-4" />
+                                <Plus className="h-4 w-4" aria-hidden="true" />
                                 <span>New Note</span>
                             </button>
 
@@ -202,20 +227,23 @@ export function StickyNotesBoard() {
                                     disabled={notes.length === 0}
                                     className="p-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                                     title="Export Notes"
+                                    aria-label="Export all notes as JSON"
                                 >
-                                    <Download className="h-5 w-5" />
+                                    <Download className="h-5 w-5" aria-hidden="true" />
                                 </button>
 
                                 <label
                                     className="p-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white cursor-pointer transition-colors"
                                     title="Import Notes"
+                                    aria-label="Import notes from JSON file"
                                 >
-                                    <Upload className="h-5 w-5" />
+                                    <Upload className="h-5 w-5" aria-hidden="true" />
                                     <input
                                         type="file"
                                         accept=".json"
                                         onChange={importNotes}
                                         className="hidden"
+                                        aria-label="Choose JSON file to import notes from"
                                     />
                                 </label>
 
@@ -224,8 +252,9 @@ export function StickyNotesBoard() {
                                     disabled={notes.length === 0}
                                     className="p-2 text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                                     title="Clear All Notes"
+                                    aria-label="Delete all sticky notes"
                                 >
-                                    <Trash2 className="h-5 w-5" />
+                                    <Trash2 className="h-5 w-5" aria-hidden="true" />
                                 </button>
                             </div>
                         </div>
@@ -235,14 +264,14 @@ export function StickyNotesBoard() {
 
             {/* Toolbar for selected note */}
             {selectedNote && (
-                <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 px-6 py-3">
+                <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 px-6 py-3" role="toolbar" aria-label="Selected note settings">
                     <div className="flex items-center space-x-4">
-                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        <span id="note-settings-label" className="text-sm font-medium text-gray-700 dark:text-gray-300">
                             Note Settings:
                         </span>
 
                         {/* Color picker */}
-                        <div className="flex items-center space-x-1">
+                        <div className="flex items-center space-x-1" role="group" aria-labelledby="note-settings-label">
                             {COLORS.map((color) => (
                                 <button
                                     key={color}
@@ -253,17 +282,22 @@ export function StickyNotesBoard() {
                                             : 'border-gray-300 dark:border-gray-600 hover:scale-105'
                                     }`}
                                     style={{ backgroundColor: color }}
+                                    aria-label={`Set note color to ${color}`}
+                                    aria-pressed={selectedNote.color === color}
                                 />
                             ))}
                         </div>
 
                         {/* Font size */}
+                        <label htmlFor="font-size-select" className="sr-only">Font size</label>
                         <select
+                            id="font-size-select"
                             value={selectedNote.fontSize}
                             onChange={(e) =>
                                 updateNote(selectedNote.id, { fontSize: parseInt(e.target.value) })
                             }
                             className="px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                            aria-label="Select font size for the note"
                         >
                             <option value={12}>12px</option>
                             <option value={14}>14px</option>
@@ -273,12 +307,15 @@ export function StickyNotesBoard() {
                         </select>
 
                         {/* Font family */}
+                        <label htmlFor="font-family-select" className="sr-only">Font family</label>
                         <select
+                            id="font-family-select"
                             value={selectedNote.fontFamily}
                             onChange={(e) =>
                                 updateNote(selectedNote.id, { fontFamily: e.target.value })
                             }
                             className="px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                            aria-label="Select font family for the note"
                         >
                             <option value="Inter, sans-serif">Sans Serif</option>
                             <option value="Georgia, serif">Serif</option>
@@ -306,11 +343,10 @@ export function StickyNotesBoard() {
                     }
                 }}
             >
-                {notes.length === 0 && (
+                {notes.length === 0 && ( // Show if truly no notes exist
                     <div className="absolute inset-0 flex items-center justify-center">
                         <div className="text-center">
                             <Palette className="h-16 w-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-
                             <h3 className="text-lg font-medium text-gray-500 dark:text-gray-400 mb-2">
                                 No sticky notes yet
                             </h3>
@@ -328,7 +364,21 @@ export function StickyNotesBoard() {
                     </div>
                 )}
 
-                {notes.map((note) => (
+                {notes.length > 0 && filteredNotes.length === 0 && searchTerm && ( // Show if notes exist but are filtered out
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="text-center">
+                            <SearchIcon className="h-16 w-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+                            <h3 className="text-lg font-medium text-gray-500 dark:text-gray-400 mb-2">
+                                No notes match your search
+                            </h3>
+                            <p className="text-gray-400 dark:text-gray-500">
+                                Try a different search term or clear the search.
+                            </p>
+                        </div>
+                    </div>
+                )}
+
+                {filteredNotes.map((note) => (
                     <StickyNote
                         key={note.id}
                         note={note}
