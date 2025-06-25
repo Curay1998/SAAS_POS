@@ -79,6 +79,12 @@ export function AdminSidebar({ isCollapsed = false, onToggle }: AdminSidebarProp
             icon: Settings,
             description: 'System configuration',
         },
+        {
+            name: 'Data Exports',
+            href: '/admin/data-exports',
+            icon: Database, // Using Database icon
+            description: 'Export system and user data',
+        },
     ];
 
     const handleLogout = async () => {

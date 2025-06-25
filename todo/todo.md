@@ -28,7 +28,7 @@ Below is an up-to-date overview of the implemented and pending features for both
 
 ### 📝 Pending Backend Tasks
 - [x] Advanced team management (assign roles, permissions)
-- [x] Data export/backup endpoints
+- [x] Data export/backup endpoints (Admin and self-serve user data export to JSON)
 - [x] Advanced notification system (WebSocket/Server-Sent Events)
 
 ---
@@ -58,6 +58,7 @@ Below is an up-to-date overview of the implemented and pending features for both
 - [x] Team member invitation UI (TeamInvitationsTab and PendingInvitations components)
 - [x] System analytics dashboard with charts/metrics (AnalyticsDashboard)
 - [x] Comprehensive API client with error handling
+- [x] User data export functionality (in Customer Settings, allowing users to download their own data)
 
 ### 📝 Pending Frontend Tasks
 
@@ -70,7 +71,7 @@ Below is an up-to-date overview of the implemented and pending features for both
 #### Admin Experience  
 - [ ] Advanced user management (bulk operations, filtering)
 - [ ] Plan usage analytics and reporting
-- [ ] Data export/backup functionality
+- [x] Data export/backup functionality (Admin panel UI for system-wide and specific user data exports)
 
 #### System Improvements
 - [ ] Performance optimization (code splitting, bundle analysis)
