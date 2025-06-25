@@ -27,6 +27,8 @@ class StickyNoteController extends Controller
                     'zIndex' => $note->z_index,
                     'fontSize' => $note->font_size,
                     'fontFamily' => $note->font_family,
+                    'reminderAt' => $note->reminder_at,
+                    'category' => $note->category,
                     'createdAt' => $note->created_at,
                     'updatedAt' => $note->updated_at,
                 ];
@@ -47,6 +49,8 @@ class StickyNoteController extends Controller
             'font_size' => 'required|integer|min:8|max:32',
             'font_family' => 'required|string',
             'project_id' => 'nullable|exists:projects,id',
+            'reminder_at' => 'nullable|date',
+            'category' => 'nullable|string|max:255',
         ]);
 
         $note = StickyNote::create([
@@ -61,6 +65,8 @@ class StickyNoteController extends Controller
             'z_index' => $request->z_index,
             'font_size' => $request->font_size,
             'font_family' => $request->font_family,
+            'reminder_at' => $request->reminder_at,
+            'category' => $request->category,
         ]);
 
         return response()->json([
@@ -75,6 +81,8 @@ class StickyNoteController extends Controller
                 'zIndex' => $note->z_index,
                 'fontSize' => $note->font_size,
                 'fontFamily' => $note->font_family,
+                'reminderAt' => $note->reminder_at,
+                'category' => $note->category,
                 'createdAt' => $note->created_at,
                 'updatedAt' => $note->updated_at,
             ]
@@ -99,6 +107,8 @@ class StickyNoteController extends Controller
                 'zIndex' => $stickyNote->z_index,
                 'fontSize' => $stickyNote->font_size,
                 'fontFamily' => $stickyNote->font_family,
+                'reminderAt' => $stickyNote->reminder_at,
+                'category' => $stickyNote->category,
                 'createdAt' => $stickyNote->created_at,
                 'updatedAt' => $stickyNote->updated_at,
             ]
@@ -121,11 +131,24 @@ class StickyNoteController extends Controller
             'z_index' => 'sometimes|integer',
             'font_size' => 'sometimes|integer|min:8|max:32',
             'font_family' => 'sometimes|string',
+            'reminder_at' => 'nullable|date',
+            'category' => 'nullable|string|max:255',
         ]);
 
-        $stickyNote->update($request->only([
-            'content', 'x', 'y', 'width', 'height', 'color', 'z_index', 'font_size', 'font_family'
-        ]));
+        // Filter out null values for reminder_at if not provided, to avoid overwriting with null
+        $updateData = $request->only([
+            'content', 'x', 'y', 'width', 'height', 'color', 'z_index', 'font_size', 'font_family', 'category'
+        ]);
+
+        if ($request->filled('reminder_at')) {
+            $updateData['reminder_at'] = $request->reminder_at;
+        } elseif ($request->exists('reminder_at') && is_null($request->reminder_at)) {
+             // Explicitly setting reminder_at to null if null is passed
+            $updateData['reminder_at'] = null;
+        }
+
+
+        $stickyNote->update($updateData);
 
         return response()->json([
             'note' => [
@@ -139,6 +162,8 @@ class StickyNoteController extends Controller
                 'zIndex' => $stickyNote->z_index,
                 'fontSize' => $stickyNote->font_size,
                 'fontFamily' => $stickyNote->font_family,
+                'reminderAt' => $stickyNote->reminder_at,
+                'category' => $stickyNote->category,
                 'createdAt' => $stickyNote->created_at,
                 'updatedAt' => $stickyNote->updated_at,
             ]
