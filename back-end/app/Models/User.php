@@ -121,4 +121,41 @@ class User extends Authenticatable implements MustVerifyEmail
         $preferences = $value ? json_decode($value, true) : [];
         return array_merge($this->getDefaultNotificationPreferences(), $preferences);
     }
+
+    /**
+     * Check if the user has a specific permission within a given project.
+     *
+     * @param string|Permission $permission The permission name or Permission model instance.
+     * @param Project $project The project to check permissions against.
+     * @return bool
+     */
+    public function hasPermissionInProject($permission, Project $project): bool
+    {
+        // Find the user's membership record for this specific project.
+        $projectMember = $this->projectMemberships()
+                              ->where('project_id', $project->id)
+                              ->first();
+
+        // If the user is a member of the project and has a role assigned,
+        // check if that role has the required permission.
+        if ($projectMember && $projectMember->role) {
+            return $projectMember->hasPermissionTo($permission);
+        }
+
+        // An alternative check: if the user is the direct owner of the project (user_id on projects table)
+        // AND is not listed as a project_member, this implies they are an owner.
+        // This case should ideally be covered by ensuring the project creator
+        // is always added as a ProjectMember with an "Owner" role.
+        // However, as a fallback or specific design choice:
+        if ($project->user_id === $this->id) {
+            // Here, you might grant blanket permissions or check against a default "Owner" role
+            // that isn't explicitly in project_members but is implied.
+            // For simplicity and explicitness, it's better to ensure owners are in project_members.
+            // If we assume owners are always in project_members, this block is not strictly needed.
+            // For now, let's keep it simple: permissions come from ProjectMember.role.
+        }
+
+
+        return false;
+    }
 }

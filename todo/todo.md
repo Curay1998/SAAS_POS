@@ -27,9 +27,9 @@ Below is an up-to-date overview of the implemented and pending features for both
 - [x] Email templates for team invitations (HTML with styling)
 
 ### 📝 Pending Backend Tasks
-- [ ] Advanced team management (assign roles, permissions)
-- [ ] Data export/backup endpoints
-- [ ] Advanced notification system (WebSocket/Server-Sent Events)
+- [x] Advanced team management (assign roles, permissions)
+- [x] Data export/backup endpoints
+- [x] Advanced notification system (WebSocket/Server-Sent Events)
 
 ---
 

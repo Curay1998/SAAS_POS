@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Task;
 use App\Models\Project;
+use App\Models\User; // Added
 use Illuminate\Http\Request;
+use App\Events\TaskAssignedEvent; // Added
+use Illuminate\Support\Facades\Auth; // Added
 
 class TaskController extends Controller
 {
@@ -77,6 +80,20 @@ class TaskController extends Controller
 
         $task->load('project');
 
+        // Dispatch TaskAssignedEvent
+        // Assuming task->user is the assigned user.
+        // And Auth::user() is the assigner.
+        if ($task->user_id) {
+            $assignedUser = User::find($task->user_id);
+            if ($assignedUser) {
+                try {
+                    event(new TaskAssignedEvent($task, $assignedUser, Auth::user()));
+                } catch (\Exception $e) {
+                    \Log::error('Failed to dispatch TaskAssignedEvent: ' . $e->getMessage());
+                }
+            }
+        }
+
         return response()->json([
             'task' => [
                 'id' => $task->id,
@@ -126,11 +143,33 @@ class TaskController extends Controller
             'description' => 'sometimes|string|nullable',
             'status' => 'sometimes|in:pending,in_progress,completed',
             'due_date' => 'sometimes|date|nullable',
+            'user_id' => 'sometimes|nullable|exists:users,id', // Allow updating assignee
         ]);
 
-        $task->update($request->only([
-            'title', 'description', 'status', 'due_date'
-        ]));
+        $oldAssigneeId = $task->user_id;
+        $newAssigneeId = $request->input('user_id', $oldAssigneeId); // Get new assignee if provided
+
+        // Fields to update
+        $updateData = $request->only(['title', 'description', 'status', 'due_date']);
+        if ($request->has('user_id')) { // Only update user_id if it's actually in the request
+            $updateData['user_id'] = $newAssigneeId;
+        }
+
+        $task->update($updateData);
+
+        // Dispatch TaskAssignedEvent if assignee changed to a new user
+        if ($newAssigneeId && $newAssigneeId !== $oldAssigneeId) {
+            $assignedUser = User::find($newAssigneeId);
+            if ($assignedUser) {
+                try {
+                    // Assigner is the authenticated user performing the update
+                    event(new TaskAssignedEvent($task->fresh(), $assignedUser, Auth::user()));
+                } catch (\Exception $e) {
+                    \Log::error('Failed to dispatch TaskAssignedEvent on update: ' . $e->getMessage());
+                }
+            }
+        }
+        // Consider an UnassignedEvent if $newAssigneeId is null and $oldAssigneeId was not.
 
         $task->load('project');
 

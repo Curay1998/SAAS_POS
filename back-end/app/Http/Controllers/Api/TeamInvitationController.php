@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
+use App\Events\TeamInvitationSentEvent; // Added
 
 class TeamInvitationController extends Controller
 {
@@ -64,6 +65,16 @@ class TeamInvitationController extends Controller
         } catch (\Exception $e) {
             // Log the error but don't fail the invitation creation
             \Log::error('Failed to send team invitation email: ' . $e->getMessage());
+        }
+
+        // Dispatch event for real-time notification if the invited user exists in the system
+        $invitedUser = User::where('email', $request->email)->first();
+        if ($invitedUser) {
+            try {
+                event(new TeamInvitationSentEvent($invitation->load(['project', 'inviter']), $invitedUser));
+            } catch (\Exception $e) {
+                \Log::error('Failed to dispatch TeamInvitationSentEvent: ' . $e->getMessage());
+            }
         }
 
         return response()->json([
