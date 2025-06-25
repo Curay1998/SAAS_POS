@@ -45,6 +45,7 @@ export function Header() {
                             <button
                                 onClick={() => router.push('/')}
                                 className="text-2xl font-bold text-blue-600 dark:text-blue-400"
+                                aria-label="TaskFlow Home"
                             >
                                 TaskFlow
                             </button>
@@ -52,9 +53,13 @@ export function Header() {
                     </div>
 
                     {/* Desktop Navigation */}
-                    <nav className="hidden md:flex items-center space-x-8">
+                    <nav className="hidden md:flex items-center space-x-8" aria-label="Main navigation">
                         <div className="relative group">
-                            <button className="flex items-center text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                            {/* Assuming this might become a dropdown. If not, it should be an <a> tag. */}
+                            <button
+                                className="flex items-center text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                                // Add aria-expanded and aria-controls if it becomes a dropdown
+                            >
                                 Features
                                 <ChevronDown className="ml-1 h-4 w-4" />
                             </button>
@@ -133,6 +138,9 @@ export function Header() {
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                             className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                            aria-label={isMenuOpen ? "Close main menu" : "Open main menu"}
+                            aria-expanded={isMenuOpen}
+                            aria-controls="mobile-menu-nav"
                         >
                             {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                         </button>
@@ -142,8 +150,8 @@ export function Header() {
 
             {/* Mobile Navigation - Overlay */}
             {isMenuOpen && (
-                <div className="md:hidden absolute top-16 inset-x-0 z-40 transform shadow-lg">
-                    <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 max-h-[calc(100vh-4rem)] overflow-y-auto">
+                <div id="mobile-menu-nav" className="md:hidden absolute top-16 inset-x-0 z-40 transform shadow-lg">
+                    <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 max-h-[calc(100vh-4rem)] overflow-y-auto" role="navigation" aria-label="Mobile menu">
                         <a
                             href="#features"
                             onClick={() => setIsMenuOpen(false)}

@@ -64,6 +64,7 @@ Below is an up-to-date overview of the implemented and pending features for both
 #### Customer Experience
 - [x] Mobile responsiveness audit and optimization (Initial pass: Header, SignupWizard, landing page decorative elements. Further visual testing recommended.)
 - [ ] Advanced sticky note features (reminders, categories, search)
+  - [x] Search functionality implemented (client-side)
 - [ ] Enhanced real-time collaboration features
 
 #### Admin Experience  
@@ -74,7 +75,7 @@ Below is an up-to-date overview of the implemented and pending features for both
 #### System Improvements
 - [ ] Performance optimization (code splitting, bundle analysis)
 - [ ] Offline functionality with service workers
-- [ ] Advanced accessibility (ARIA labels, keyboard navigation)
+- [x] Advanced accessibility (ARIA labels, keyboard navigation) - Initial pass on core navigation components (Header, Sidebars) and StickyNotesBoard.
 - [ ] Internationalization (i18n) support
 
 ---
@@ -84,7 +85,14 @@ Below is an up-to-date overview of the implemented and pending features for both
 ### 📝 Pending Tasks
 - [ ] Backend: Comprehensive PHPUnit test coverage for all endpoints
 - [ ] Backend: Integration tests for Stripe webhook handling
-- [ ] Backend: Database factory and seeder improvements
+- [x] Backend: Database factory and seeder improvements
+  - UserFactory enhanced.
+  - ProjectFactory created.
+  - TaskFactory created.
+  - StickyNoteFactory created.
+  - ProjectMemberFactory created.
+  - TeamInvitationFactory created (model updated with HasFactory).
+  - DatabaseSeeder updated for dev/testing data.
 - [ ] Frontend: Unit tests for components (Jest/React Testing Library)
 - [ ] Frontend: Integration tests for user flows (Cypress/Playwright)
 - [ ] Frontend: Visual regression testing

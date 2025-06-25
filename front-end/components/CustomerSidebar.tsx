@@ -107,6 +107,8 @@ export function CustomerSidebar({ isCollapsed = false, onToggle }: CustomerSideb
                                     : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'
                             }`}
                             title={isCollapsed ? item.name : undefined}
+                            aria-label={isCollapsed ? item.name : undefined}
+                            aria-current={active ? 'page' : undefined}
                         >
                             <Icon
                                 className={`h-5 w-5 ${
@@ -116,6 +118,7 @@ export function CustomerSidebar({ isCollapsed = false, onToggle }: CustomerSideb
                                         ? 'text-white'
                                         : 'text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300'
                                 }`}
+                                aria-hidden="true"
                             />
 
                             {!isCollapsed && (
@@ -125,7 +128,7 @@ export function CustomerSidebar({ isCollapsed = false, onToggle }: CustomerSideb
                                 </div>
                             )}
                             {active && !isCollapsed && (
-                                <div className="w-2 h-2 bg-white rounded-full ml-2" />
+                                <div className="w-2 h-2 bg-white rounded-full ml-2" aria-hidden="true" />
                             )}
                         </button>
                     );
@@ -145,6 +148,10 @@ export function CustomerSidebar({ isCollapsed = false, onToggle }: CustomerSideb
                                 : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'
                         }`}
                         title={isCollapsed ? 'Projects' : undefined}
+                        aria-label={isCollapsed ? 'Projects' : undefined}
+                        aria-expanded={isCollapsed ? undefined : isProjectsOpen}
+                        aria-controls={isCollapsed ? undefined : 'customer-projects-submenu'}
+                        aria-current={isProjectsActive() ? 'page' : undefined}
                     >
                         <FolderOpen
                             className={`h-5 w-5 ${
@@ -154,6 +161,7 @@ export function CustomerSidebar({ isCollapsed = false, onToggle }: CustomerSideb
                                     ? 'text-white'
                                     : 'text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300'
                             }`}
+                            aria-hidden="true"
                         />
 
                         {!isCollapsed && (
@@ -162,7 +170,7 @@ export function CustomerSidebar({ isCollapsed = false, onToggle }: CustomerSideb
                                     <div className="font-medium">Projects</div>
                                     <div className="text-xs opacity-75">Manage projects</div>
                                 </div>
-                                <div className="ml-2">
+                                <div className="ml-2" aria-hidden="true">
                                     {isProjectsOpen ? (
                                         <ChevronUp className="h-4 w-4" />
                                     ) : (
@@ -172,13 +180,13 @@ export function CustomerSidebar({ isCollapsed = false, onToggle }: CustomerSideb
                             </>
                         )}
                         {isProjectsActive() && !isCollapsed && (
-                            <div className="w-2 h-2 bg-white rounded-full ml-2" />
+                            <div className="w-2 h-2 bg-white rounded-full ml-2" aria-hidden="true" />
                         )}
                     </button>
 
                     {/* Projects Dropdown Content */}
                     {!isCollapsed && isProjectsOpen && (
-                        <div className="ml-4 space-y-1 border-l-2 border-gray-200 dark:border-gray-700 pl-4">
+                        <div id="customer-projects-submenu" className="ml-4 space-y-1 border-l-2 border-gray-200 dark:border-gray-700 pl-4" role="group">
                             {/* All Projects Link */}
                             <button
                                 onClick={() => handleNavigation('/customer/projects')}
@@ -187,8 +195,9 @@ export function CustomerSidebar({ isCollapsed = false, onToggle }: CustomerSideb
                                         ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'
                                         : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'
                                 }`}
+                                aria-current={pathname === '/customer/projects' ? 'page' : undefined}
                             >
-                                <FolderOpen className="h-4 w-4 mr-2" />
+                                <FolderOpen className="h-4 w-4 mr-2" aria-hidden="true" />
                                 All Projects
                             </button>
 
@@ -204,12 +213,12 @@ export function CustomerSidebar({ isCollapsed = false, onToggle }: CustomerSideb
                                             ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'
                                             : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'
                                     }`}
+                                    aria-current={pathname === `/customer/projects/${project.id}` ? 'page' : undefined}
                                 >
-                                    <div className={`h-3 w-3 rounded-full mr-2 ${project.color}`} />
-
+                                    <div className={`h-3 w-3 rounded-full mr-2 ${project.color}`} aria-hidden="true" />
                                     <span className="truncate">{project.name}</span>
                                     {project.status === 'completed' && (
-                                        <CheckSquare className="h-3 w-3 ml-auto text-green-500" />
+                                        <CheckSquare className="h-3 w-3 ml-auto text-green-500" aria-label="Completed" />
                                     )}
                                 </button>
                             ))}
@@ -219,7 +228,7 @@ export function CustomerSidebar({ isCollapsed = false, onToggle }: CustomerSideb
                                 onClick={() => handleNavigation('/customer/projects/new')}
                                 className="w-full flex items-center px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white rounded-lg transition-all duration-200 group border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500"
                             >
-                                <Plus className="h-4 w-4 mr-2" />
+                                <Plus className="h-4 w-4 mr-2" aria-hidden="true" />
                                 New Project
                             </button>
                         </div>
@@ -288,16 +297,20 @@ export function CustomerSidebar({ isCollapsed = false, onToggle }: CustomerSideb
                 <button
                     onClick={() => setIsMobileOpen(true)}
                     className="fixed top-4 left-4 z-50 p-2 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700"
+                    aria-label="Open customer menu"
+                    aria-expanded={isMobileOpen}
+                    aria-controls="customer-mobile-sidebar"
                 >
                     <Menu className="h-5 w-5 text-gray-600 dark:text-gray-400" />
                 </button>
 
                 {/* Mobile sidebar overlay */}
                 {isMobileOpen && (
-                    <div className="fixed inset-0 z-50 lg:hidden">
+                    <div id="customer-mobile-sidebar" className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true">
                         <div
                             className="fixed inset-0 bg-gray-600 bg-opacity-75"
                             onClick={() => setIsMobileOpen(false)}
+                            aria-hidden="true"
                         />
 
                         <div className="relative flex-1 flex flex-col max-w-xs w-full bg-white dark:bg-gray-800 shadow-xl">
@@ -305,11 +318,12 @@ export function CustomerSidebar({ isCollapsed = false, onToggle }: CustomerSideb
                                 <button
                                     onClick={() => setIsMobileOpen(false)}
                                     className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                    aria-label="Close customer menu"
                                 >
                                     <X className="h-6 w-6 text-white" />
                                 </button>
                             </div>
-                            <div className="flex-1 h-0 overflow-y-auto">
+                            <div className="flex-1 h-0 overflow-y-auto" role="navigation" aria-label="Customer menu">
                                 <SidebarContent />
                             </div>
                         </div>
