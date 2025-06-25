@@ -18,6 +18,8 @@ export interface Note {
     fontFamily: string;
     createdAt: Date;
     updatedAt: Date;
+    reminderAt?: string | null;
+    category?: string | null;
 }
 
 const COLORS = [
@@ -60,6 +62,8 @@ export function StickyNotesBoard() {
             fontFamily: FONT_FAMILIES[0],
             createdAt: new Date(),
             updatedAt: new Date(),
+            reminderAt: null,
+            category: null,
         };
 
         setNotes((prev) => [...prev, newNote]);
@@ -322,6 +326,33 @@ export function StickyNotesBoard() {
                             <option value="Monaco, monospace">Monospace</option>
                             <option value="Comic Sans MS, cursive">Comic Sans</option>
                         </select>
+
+                        {/* Category Input */}
+                        <label htmlFor="category-input" className="sr-only">Category</label>
+                        <input
+                            id="category-input"
+                            type="text"
+                            placeholder="Category"
+                            value={selectedNote.category || ''}
+                            onChange={(e) =>
+                                updateNote(selectedNote.id, { category: e.target.value || null })
+                            }
+                            className="px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                            aria-label="Set category for the note"
+                        />
+
+                        {/* Reminder Input */}
+                        <label htmlFor="reminder-input" className="sr-only">Reminder</label>
+                        <input
+                            id="reminder-input"
+                            type="datetime-local"
+                            value={selectedNote.reminderAt ? selectedNote.reminderAt.substring(0, 16) : ''} // Format for datetime-local
+                            onChange={(e) =>
+                                updateNote(selectedNote.id, { reminderAt: e.target.value ? new Date(e.target.value).toISOString() : null })
+                            }
+                            className="px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                            aria-label="Set reminder date and time for the note"
+                        />
 
                         <div className="flex-1"></div>
 

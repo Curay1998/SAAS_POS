@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import Draggable from 'react-draggable';
-import { X, Copy, Palette, Type, Move, MoreVertical } from 'lucide-react';
+import { X, Copy, Palette, Type, Move, MoreVertical, Clock, Tag } from 'lucide-react';
 import type { Note } from './StickyNotesBoard';
 
 interface StickyNoteProps {
@@ -196,25 +196,34 @@ export function StickyNote({
                     onContextMenu={handleContextMenu}
                 >
                     {/* Note Header */}
-                    <div className="drag-handle flex items-center justify-between p-2 cursor-move bg-black/5 rounded-t-lg">
-                        <div className="flex items-center space-x-1">
-                            <Move className="h-3 w-3 text-gray-600" />
-                            <span className="text-xs text-gray-600 font-medium">Note</span>
+                    <div className="drag-handle flex items-center justify-between p-2 cursor-move bg-black/5 rounded-t-lg text-xs text-gray-600">
+                        <div className="flex items-center space-x-1 overflow-hidden">
+                            <Move className="h-3 w-3 text-gray-600 flex-shrink-0" />
+                            <span className="font-medium truncate" title={note.category || 'Note'}>
+                                {note.category || 'Note'}
+                            </span>
+                            {note.category && <Tag className="h-3 w-3 text-gray-500 flex-shrink-0" />}
                         </div>
                         <div className="flex items-center space-x-1">
-                            {isSelected && (
-                                <div className="flex items-center space-x-1">
-                                    <button
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            onDuplicate(note.id);
-                                        }}
-                                        className="p-1 hover:bg-black/10 rounded text-gray-600 hover:text-gray-800 transition-colors"
-                                        title="Duplicate"
-                                    >
-                                        <Copy className="h-3 w-3" />
-                                    </button>
+                            {note.reminderAt && (
+                                <div className="flex items-center space-x-0.5 text-blue-600" title={`Reminder: ${new Date(note.reminderAt).toLocaleString()}`}>
+                                    <Clock className="h-3 w-3" />
+                                    <span className="text-xs">
+                                        {new Date(note.reminderAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                    </span>
                                 </div>
+                            )}
+                            {isSelected && (
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        onDuplicate(note.id);
+                                    }}
+                                    className="p-1 hover:bg-black/10 rounded text-gray-600 hover:text-gray-800 transition-colors"
+                                    title="Duplicate"
+                                >
+                                    <Copy className="h-3 w-3" />
+                                </button>
                             )}
                             <button
                                 onClick={(e) => {
@@ -230,7 +239,7 @@ export function StickyNote({
                     </div>
 
                     {/* Note Content */}
-                    <div className="p-3 h-full">
+                    <div className="p-3 h-full"> {/* Adjusted height calculation might be needed if header grows */}
                         {isEditing ? (
                             <textarea
                                 ref={textareaRef}
