@@ -94,7 +94,7 @@ export function Features() {
                 {/* Features Grid */}
                 <div className="relative mb-20">
                     {/* Background decorative elements */}
-                    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                    <div className="absolute inset-0 overflow-hidden pointer-events-none hidden md:block">
                         <div className="absolute top-10 left-10 w-32 h-32 bg-blue-200/30 dark:bg-blue-800/20 rounded-full blur-2xl"></div>
                         <div className="absolute bottom-10 right-10 w-40 h-40 bg-purple-200/30 dark:bg-purple-800/20 rounded-full blur-2xl"></div>
                         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-indigo-200/20 dark:bg-indigo-800/10 rounded-full blur-3xl"></div>
@@ -215,8 +215,8 @@ export function Features() {
                 {/* Feature Highlight */}
                 <div className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-800 dark:via-gray-800 dark:to-gray-700 rounded-3xl p-8 md:p-16">
                     <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-                    <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
-                    <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-indigo-400/20 to-blue-400/20 rounded-full blur-3xl"></div>
+                    <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl hidden lg:block"></div>
+                    <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-indigo-400/20 to-blue-400/20 rounded-full blur-3xl hidden lg:block"></div>
 
                     <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                         <div>
