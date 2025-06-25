@@ -62,7 +62,7 @@ Below is an up-to-date overview of the implemented and pending features for both
 ### 📝 Pending Frontend Tasks
 
 #### Customer Experience
-- [ ] Mobile responsiveness audit and optimization
+- [x] Mobile responsiveness audit and optimization (Initial pass: Header, SignupWizard, landing page decorative elements. Further visual testing recommended.)
 - [ ] Advanced sticky note features (reminders, categories, search)
 - [ ] Enhanced real-time collaboration features
 

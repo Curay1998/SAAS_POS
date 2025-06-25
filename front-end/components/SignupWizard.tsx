@@ -111,9 +111,10 @@ export default function SignupWizard({ onComplete }: SignupWizardProps) {
                 <div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                     <div className="px-4 py-5 sm:p-6">
                         <nav aria-label="Progress">
-                            <ol className="flex items-center justify-between">
+                            {/* Steps for medium screens and up (horizontal) */}
+                            <ol className="hidden sm:flex items-center justify-between">
                                 {steps.map((step, index) => (
-                                    <li key={step.id} className="flex items-center">
+                                    <li key={`${step.id}-desktop`} className="relative flex-1 last:flex-none">
                                         <div className="flex items-center">
                                             <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 ${
                                                 index === currentStep
@@ -138,20 +139,54 @@ export default function SignupWizard({ onComplete }: SignupWizardProps) {
                                                 }`}>
                                                     {step.title}
                                                 </p>
-                                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                                <p className="text-sm text-gray-500 dark:text-gray-400 hidden md:block">
                                                     {step.description}
                                                 </p>
                                             </div>
                                         </div>
                                         {index < steps.length - 1 && (
-                                            <div className="flex-1 mx-4">
-                                                <div className={`h-1 rounded-full ${
+                                            <div className="absolute top-1/2 left-0 w-full h-px -translate-y-1/2 -z-10">
+                                                <div className={`ml-[calc(2.5rem+1rem)] mr-[calc(50%+1rem)] h-1 rounded-full ${ // 2.5rem is icon width, 1rem is ml-4. Adjust mr to connect properly
                                                     step.isCompleted
                                                         ? 'bg-green-600'
                                                         : 'bg-gray-200 dark:bg-gray-600'
                                                 }`} />
                                             </div>
                                         )}
+                                    </li>
+                                ))}
+                            </ol>
+                            {/* Steps for small screens (vertical) */}
+                            <ol className="sm:hidden space-y-4">
+                                {steps.map((step, index) => (
+                                    <li key={`${step.id}-mobile`} className="flex items-start">
+                                        <div className={`flex items-center justify-center w-8 h-8 rounded-full border-2 mr-3 flex-shrink-0 ${
+                                            index === currentStep
+                                                ? 'border-blue-600 bg-blue-600 text-white'
+                                                : step.isCompleted
+                                                ? 'border-green-600 bg-green-600 text-white'
+                                                : 'border-gray-300 bg-gray-100 text-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400'
+                                        }`}>
+                                            {step.isCompleted ? (
+                                                <CheckCircle className="w-5 h-5" />
+                                            ) : (
+                                                <span className="text-xs font-medium">{index + 1}</span>
+                                            )}
+                                        </div>
+                                        <div className="min-w-0">
+                                            <p className={`text-sm font-medium ${
+                                                index === currentStep
+                                                    ? 'text-blue-600 dark:text-blue-400'
+                                                    : step.isCompleted
+                                                    ? 'text-green-600 dark:text-green-400'
+                                                    : 'text-gray-500 dark:text-gray-400'
+                                            }`}>
+                                                {step.title}
+                                            </p>
+                                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                                                {step.description}
+                                            </p>
+                                        </div>
                                     </li>
                                 ))}
                             </ol>

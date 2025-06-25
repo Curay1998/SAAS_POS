@@ -91,13 +91,13 @@ export function Testimonials() {
         <section className="relative py-24 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-indigo-900/20 overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Enhanced Background Elements */}
-                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute inset-0 overflow-hidden pointer-events-none hidden md:block">
                     {/* Animated gradient orbs */}
                     <div className="absolute top-20 right-20 w-32 h-32 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-full blur-xl animate-pulse"></div>
                     <div className="absolute bottom-20 left-20 w-40 h-40 bg-gradient-to-r from-indigo-400/20 to-blue-400/20 rounded-full blur-xl animate-pulse delay-1000"></div>
                     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-purple-400/10 to-pink-400/10 rounded-full blur-2xl animate-pulse delay-500"></div>
 
-                    {/* Floating dots with animation */}
+                    {/* Floating dots with animation (These are small and might be okay, but can also be hidden if desired) */}
                     <div className="absolute top-20 right-20 w-2 h-2 bg-blue-400 rounded-full opacity-60 animate-bounce delay-100"></div>
                     <div className="absolute top-40 left-16 w-2 h-2 bg-purple-400 rounded-full opacity-40 animate-bounce delay-300"></div>
                     <div className="absolute bottom-32 right-32 w-2 h-2 bg-indigo-400 rounded-full opacity-50 animate-bounce delay-500"></div>

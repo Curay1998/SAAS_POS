@@ -138,86 +138,90 @@ export function Header() {
                         </button>
                     </div>
                 </div>
+            </div>
 
-                {/* Mobile Navigation */}
-                {isMenuOpen && (
-                    <div className="md:hidden">
-                        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
-                            <a
-                                href="#features"
-                                className="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
-                            >
-                                Features
-                            </a>
-                            <a
-                                href="#pricing"
-                                className="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
-                            >
-                                Pricing
-                            </a>
-                            <a
-                                href="#about"
-                                className="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
-                            >
-                                About
-                            </a>
-                            <a
-                                href="#contact"
-                                className="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
-                            >
-                                Contact
-                            </a>
-                            <div className="px-3 py-2 space-y-2">
-                                {isAuthenticated ? (
-                                    <>
-                                        <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                                            Welcome, {user?.name}
-                                        </div>
+            {/* Mobile Navigation - Overlay */}
+            {isMenuOpen && (
+                <div className="md:hidden absolute top-16 inset-x-0 z-40 transform shadow-lg">
+                    <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 max-h-[calc(100vh-4rem)] overflow-y-auto">
+                        <a
+                            href="#features"
+                            onClick={() => setIsMenuOpen(false)}
+                            className="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md"
+                        >
+                            Features
+                        </a>
+                        <a
+                            href="#pricing"
+                            onClick={() => setIsMenuOpen(false)}
+                            className="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md"
+                        >
+                            Pricing
+                        </a>
+                        <a
+                            href="#about"
+                            onClick={() => setIsMenuOpen(false)}
+                            className="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md"
+                        >
+                            About
+                        </a>
+                        <a
+                            href="#contact"
+                            onClick={() => setIsMenuOpen(false)}
+                            className="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md"
+                        >
+                            Contact
+                        </a>
+                        <div className="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
+                            {isAuthenticated ? (
+                                <div className="px-3 space-y-2">
+                                    <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">
+                                        Welcome, {user?.name}
+                                    </div>
+                                    <button
+                                        onClick={() => { handleDashboard(); setIsMenuOpen(false); }}
+                                        className="w-full text-left flex items-center px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md"
+                                    >
+                                        <User className="h-5 w-5 mr-2" />
+                                        Dashboard
+                                    </button>
+                                    {isAdmin() && (
                                         <button
-                                            onClick={handleDashboard}
-                                            className="w-full text-left flex items-center text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                                            onClick={() => { handleAdmin(); setIsMenuOpen(false); }}
+                                            className="w-full text-left flex items-center px-3 py-2 text-base font-medium text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md"
                                         >
-                                            <User className="h-4 w-4 mr-2" />
-                                            Dashboard
+                                            <Shield className="h-5 w-5 mr-2" />
+                                            Admin Panel
                                         </button>
-                                        {isAdmin() && (
-                                            <button
-                                                onClick={handleAdmin}
-                                                className="w-full text-left flex items-center text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300"
-                                            >
-                                                <Shield className="h-4 w-4 mr-2" />
-                                                Admin Panel
-                                            </button>
-                                        )}
-                                        <button
-                                            onClick={handleLogout}
-                                            className="w-full text-left flex items-center text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400"
-                                        >
-                                            <LogOut className="h-4 w-4 mr-2" />
-                                            Logout
-                                        </button>
-                                    </>
-                                ) : (
-                                    <>
-                                        <button
-                                            onClick={handleSignIn}
-                                            className="w-full text-left text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
-                                        >
-                                            Sign In
-                                        </button>
-                                        <button
-                                            onClick={handleStartTrial}
-                                            className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
-                                        >
-                                            Start Free Trial
-                                        </button>
-                                    </>
-                                )}
-                            </div>
+                                    )}
+                                    <button
+                                        onClick={() => { handleLogout(); setIsMenuOpen(false); }}
+                                        className="w-full text-left flex items-center px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md"
+                                    >
+                                        <LogOut className="h-5 w-5 mr-2" />
+                                        Logout
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="px-3 space-y-2">
+                                    <button
+                                        onClick={() => { handleSignIn(); setIsMenuOpen(false); }}
+                                        className="w-full text-left block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md"
+                                    >
+                                        Sign In
+                                    </button>
+                                    <button
+                                        onClick={() => { handleStartTrial(); setIsMenuOpen(false); }}
+                                        className="w-full mt-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg text-base font-medium transition-colors"
+                                    >
+                                        Start Free Trial
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
         </header>
     );
 }

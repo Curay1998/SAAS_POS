@@ -6,7 +6,7 @@ export function Hero() {
     return (
         <section className="relative pt-16 pb-12 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-hidden">
             {/* Background decorative elements */}
-            <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute inset-0 overflow-hidden hidden md:block">
                 <div className="absolute -top-40 -right-32 w-80 h-80 bg-blue-400/10 rounded-full blur-3xl"></div>
                 <div className="absolute -bottom-40 -left-32 w-80 h-80 bg-purple-400/10 rounded-full blur-3xl"></div>
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-400/5 rounded-full blur-3xl"></div>
@@ -171,9 +171,9 @@ export function Hero() {
                 {/* Enhanced Hero Image/Dashboard Preview */}
                 <div className="mt-12 relative">
                     {/* Floating elements around the dashboard */}
-                    <div className="absolute -top-8 -left-8 w-16 h-16 bg-blue-500/10 rounded-full blur-xl animate-pulse"></div>
-                    <div className="absolute -top-4 -right-12 w-12 h-12 bg-purple-500/10 rounded-full blur-xl animate-pulse delay-1000"></div>
-                    <div className="absolute -bottom-8 -right-8 w-20 h-20 bg-indigo-500/10 rounded-full blur-xl animate-pulse delay-500"></div>
+                    <div className="absolute -top-8 -left-8 w-16 h-16 bg-blue-500/10 rounded-full blur-xl animate-pulse hidden md:block"></div>
+                    <div className="absolute -top-4 -right-12 w-12 h-12 bg-purple-500/10 rounded-full blur-xl animate-pulse delay-1000 hidden md:block"></div>
+                    <div className="absolute -bottom-8 -right-8 w-20 h-20 bg-indigo-500/10 rounded-full blur-xl animate-pulse delay-500 hidden md:block"></div>
 
                     <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-200/50 dark:border-gray-700/50 overflow-hidden transform hover:scale-105 transition-transform duration-500">
                         <div className="bg-gradient-to-r from-gray-100 to-gray-50 dark:from-gray-700 dark:to-gray-800 px-8 py-6 border-b border-gray-200/50 dark:border-gray-600/50">
