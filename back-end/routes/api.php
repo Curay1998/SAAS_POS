@@ -14,7 +14,12 @@ use App\Http\Controllers\Api\TeamInvitationController;
 use App\Http\Controllers\Api\AnalyticsController;
 use App\Http\Controllers\Api\ProjectMemberController;
 use App\Http\Controllers\Api\RoleController;
-use App\Http\Controllers\Api\DataExportController; // Added
+// Remove previous generic DataExportController if it exists
+// use App\Http\Controllers\Api\DataExportController;
+
+// Import new specific export controllers
+use App\Http\Controllers\Admin\AdminExportController;
+use App\Http\Controllers\UserExportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,8 +87,14 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::post('user/profile/image', [\App\Http\Controllers\Api\ProfileImageController::class, 'store']);
     Route::delete('user/profile/image', [\App\Http\Controllers\Api\ProfileImageController::class, 'destroy']);
 
-    // User data export
-    Route::get('user/export-data', [DataExportController::class, 'exportUserData']);
+    // User-specific data export routes
+    Route::prefix('export')->group(function () {
+        Route::get('my-profile', [UserExportController::class, 'exportMyProfile']);
+        Route::get('my-projects', [UserExportController::class, 'exportMyProjects']);
+        Route::get('my-tasks', [UserExportController::class, 'exportMyTasks']);
+        Route::get('my-stickynotes', [UserExportController::class, 'exportMyStickyNotes']);
+        Route::get('my-all-data', [UserExportController::class, 'exportMyAllData']);
+    });
 
     // Notification preferences
     Route::get('notifications/preferences', [NotificationController::class, 'getPreferences']);
@@ -132,6 +143,15 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
             Route::get('projects', [AnalyticsController::class, 'getProjectAnalytics']);
             Route::get('tasks', [AnalyticsController::class, 'getTaskAnalytics']);
             Route::get('teams', [AnalyticsController::class, 'getTeamAnalytics']);
+        });
+
+        // Admin data export routes
+        Route::prefix('export')->group(function () {
+            Route::get('users', [AdminExportController::class, 'exportUsers']);
+            Route::get('projects', [AdminExportController::class, 'exportProjects']);
+            Route::get('tasks', [AdminExportController::class, 'exportTasks']);
+            Route::get('stickynotes', [AdminExportController::class, 'exportStickyNotes']);
+            Route::get('user/{user}/all', [AdminExportController::class, 'exportSingleUserAllData']);
         });
     });
 });

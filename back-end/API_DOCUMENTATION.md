@@ -228,6 +228,81 @@ DELETE /admin/users/{id}
 Authorization: Bearer {admin_token}
 ```
 
+### Data Export (Admin Only)
+
+#### Export All Users
+```http
+GET /admin/export/users
+Authorization: Bearer {admin_token}
+```
+_Returns a JSON file with all users._
+
+#### Export All Projects
+```http
+GET /admin/export/projects
+Authorization: Bearer {admin_token}
+```
+_Returns a JSON file with all projects, including their tasks and sticky notes._
+
+#### Export All Tasks
+```http
+GET /admin/export/tasks
+Authorization: Bearer {admin_token}
+```
+_Returns a JSON file with all tasks._
+
+#### Export All Sticky Notes
+```http
+GET /admin/export/stickynotes
+Authorization: Bearer {admin_token}
+```
+_Returns a JSON file with all sticky notes._
+
+#### Export All Data for a Specific User
+```http
+GET /admin/export/user/{userId}/all
+Authorization: Bearer {admin_token}
+```
+_Returns a JSON file with all data related to the specified user ID._
+
+### User Data Export (Authenticated User - Self)
+
+#### Export My Profile
+```http
+GET /export/my-profile
+Authorization: Bearer {token}
+```
+_Returns a JSON file with the authenticated user's profile data._
+
+#### Export My Projects
+```http
+GET /export/my-projects
+Authorization: Bearer {token}
+```
+_Returns a JSON file with projects the authenticated user is a member of, including their tasks and sticky notes._
+
+#### Export My Tasks
+```http
+GET /export/my-tasks
+Authorization: Bearer {token}
+```
+_Returns a JSON file with tasks assigned to or created by the authenticated user._
+
+#### Export My Sticky Notes
+```http
+GET /export/my-stickynotes
+Authorization: Bearer {token}
+```
+_Returns a JSON file with sticky notes created by the authenticated user._
+
+#### Export All My Data
+```http
+GET /export/my-all-data
+Authorization: Bearer {token}
+```
+_Returns a JSON file with a comprehensive export of the authenticated user's data._
+
+
 ## Response Format
 
 ### Success Response

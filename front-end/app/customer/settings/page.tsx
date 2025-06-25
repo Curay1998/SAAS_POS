@@ -12,11 +12,13 @@ import {
     Shield,
     Palette,
     Globe,
+    Download, // Added Download icon
 } from 'lucide-react';
 import { ProfileSettingsTab } from '@/components/ProfileSettingsTab';
 import { BillingSettingsTab } from '@/components/BillingSettingsTab';
 import { NotificationSettingsTab } from '@/components/NotificationSettingsTab';
 import { SecuritySettingsTab } from '@/components/SecuritySettingsTab';
+import { MyDataSettingsTab } from '@/components/MyDataSettingsTab'; // Import the new tab component
 
 export default function CustomerSettingsPage() {
     return (
@@ -33,9 +35,10 @@ export default function CustomerSettingsPage() {
 
 function SettingsContent() {
     const searchParams = useSearchParams();
+    const validTabs = ['profile', 'billing', 'notifications', 'security', 'my-data'];
     const [activeTab, setActiveTab] = useState(() => {
         const tabParam = searchParams.get('tab');
-        return ['profile', 'billing', 'notifications', 'security'].includes(tabParam || '') 
+        return validTabs.includes(tabParam || '')
             ? tabParam || 'profile' 
             : 'profile';
     });
@@ -68,6 +71,13 @@ function SettingsContent() {
             icon: <Shield className="h-4 w-4" />,
             description: 'Password and security settings',
             content: <SecuritySettingsTab />,
+        },
+        {
+            id: 'my-data',
+            label: 'My Data',
+            icon: <Download className="h-4 w-4" />,
+            description: 'Export your personal data',
+            content: <MyDataSettingsTab />,
         },
     ];
 
