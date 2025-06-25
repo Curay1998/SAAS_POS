@@ -24,6 +24,8 @@ return new class extends Migration
             $table->integer('z_index')->default(1);
             $table->integer('font_size')->default(14);
             $table->string('font_family')->default('Inter, sans-serif');
+            $table->timestamp('reminder_at')->nullable();
+            $table->string('category')->nullable();
             $table->timestamps();
         });
     }

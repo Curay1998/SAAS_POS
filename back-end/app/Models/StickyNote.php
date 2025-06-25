@@ -21,6 +21,12 @@ class StickyNote extends Model
         'z_index',
         'font_size',
         'font_family',
+        'reminder_at',
+        'category',
+    ];
+
+    protected $casts = [
+        'reminder_at' => 'datetime',
     ];
 
     public function user()
