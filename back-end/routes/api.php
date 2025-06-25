@@ -12,6 +12,9 @@ use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\TeamInvitationController;
 use App\Http\Controllers\Api\AnalyticsController;
+use App\Http\Controllers\Api\ProjectMemberController;
+use App\Http\Controllers\Api\RoleController;
+use App\Http\Controllers\Api\DataExportController; // Added
 
 /*
 |--------------------------------------------------------------------------
@@ -54,18 +57,33 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     // Projects
     Route::apiResource('projects', ProjectController::class)->middleware('plan.limit:projects');
     
+    // Project Members (nested under projects)
+    Route::prefix('projects/{project}')->group(function () {
+        Route::get('members', [ProjectMemberController::class, 'index']);
+        Route::post('members', [ProjectMemberController::class, 'store']);
+        // Route model binding for {user} will be by its ID.
+        Route::put('members/{user}', [ProjectMemberController::class, 'update']);
+        Route::delete('members/{user}', [ProjectMemberController::class, 'destroy']);
+    });
+
     // Tasks
     Route::apiResource('tasks', TaskController::class);
     
     // Plans (public access for viewing)
     Route::get('plans', [PlanController::class, 'index']);
     Route::get('plans/{plan}', [PlanController::class, 'show']);
+
+    // List available roles
+    Route::get('roles', [RoleController::class, 'index']);
     
     // User profile
     Route::get('user/profile', [\App\Http\Controllers\Api\ProfileController::class, 'show']);
     Route::put('user/profile', [\App\Http\Controllers\Api\ProfileController::class, 'update']);
     Route::post('user/profile/image', [\App\Http\Controllers\Api\ProfileImageController::class, 'store']);
     Route::delete('user/profile/image', [\App\Http\Controllers\Api\ProfileImageController::class, 'destroy']);
+
+    // User data export
+    Route::get('user/export-data', [DataExportController::class, 'exportUserData']);
 
     // Notification preferences
     Route::get('notifications/preferences', [NotificationController::class, 'getPreferences']);

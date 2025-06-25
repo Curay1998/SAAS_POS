@@ -58,6 +58,8 @@ class Project extends Model
 
     public function getTeamMembersAttribute()
     {
-        return $this->members()->count() + 1; // +1 for owner
+        // Counts distinct users who are members of the project.
+        // The project owner (creator) is now also a ProjectMember.
+        return $this->members()->distinct('user_id')->count();
     }
 }
